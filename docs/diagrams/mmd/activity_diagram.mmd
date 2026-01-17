@@ -1,0 +1,77 @@
+flowchart TD
+    Start([START - Hra začíná]):::startStyle --> Puda[Lokace: Půda]
+
+    %% === PŮDA - Hledání mapy ===
+    Puda --> CheckMap{Našel mapu?}
+    CheckMap -->|Ne| SearchAttic[Prohledat půdu]
+    SearchAttic --> CheckMap
+    CheckMap -->|Ano| Babicka[Lokace: Dům babičky]
+
+    %% === DŮM BABIČKY ===
+    Babicka --> TalkGrandma[Mluv s babičkou]
+    TalkGrandma --> GetAdvice[Získat radu o cestě]
+    GetAdvice --> Vesnice[Lokace: Vesnice]
+
+    %% === VESNICE - Iris a Rose ===
+    Vesnice --> MeetIrisRose[Setkat se s Iris a Rose]
+    MeetIrisRose --> TalkIris[Mluv s Iris]
+    TalkIris --> TalkRose[Mluv s Rose]
+    TalkRose --> GetSword{Získat meč?}
+    GetSword -->|Ne| NoSword[Pokračovat bez meče]
+    GetSword -->|Ano| HasSword[Má meč]
+
+    NoSword --> Les[Lokace: Začarovaný les]
+    HasSword --> Les
+
+    %% === ZAČAROVANÝ LES - Rozcestí ===
+    Les --> ChoosePath{Zvolit cestu}
+    ChoosePath -->|Jih - pokračovat| ToTabor[Směr k táboru goblinů]
+    ChoosePath -->|Východ - boční cesta| ToDoupe[Směr k doupěti šelem]
+
+    %% === DOUPĚ ŠELEM - Boční větev ===
+    ToDoupe --> Doupe[Lokace: Doupě šelem]
+    Doupe --> CheckSwordBeasts{Má meč?}
+    CheckSwordBeasts -->|Ne| Death1([SMRT - Zabit šelmami]):::deathStyle
+    CheckSwordBeasts -->|Ano| FightBeasts[Bojovat se šelmami]
+    FightBeasts --> BeastsDefeated[Šelmy poraženy]
+    BeastsDefeated --> BackToLes[Zpět do lesa]
+    BackToLes --> ToTabor
+
+    %% === TÁBOR GOBLINŮ - Hlavní cesta ===
+    ToTabor --> Tabor[Lokace: Tábor goblinů]
+    Tabor --> HandleGoblins{Řešit gobliny}
+    HandleGoblins -->|Bojovat| FightGoblins[Boj s gobliny]
+    HandleGoblins -->|Vyjednávat| NegotiateGoblins[Vyjednávání]
+    HandleGoblins -->|Oklamat| TrickGoblins[Trik na gobliny]
+
+    FightGoblins --> GoblinOutcome{Výsledek boje}
+    GoblinOutcome -->|Prohra| Death2([SMRT - Zabit gobliny]):::deathStyle
+    GoblinOutcome -->|Výhra| GetKey[Získat klíč]
+
+    NegotiateGoblins --> GetKey
+    TrickGoblins --> GetKey
+
+    %% === ZLATÁ BRÁNA ===
+    GetKey --> Brana[Lokace: Zlatá brána]
+    Brana --> CheckKey{Má klíč?}
+    CheckKey -->|Ne| Death3([SMRT - Nemůže projít branou]):::deathStyle
+    CheckKey -->|Ano| UnlockGate[Použít klíč a odemknout]
+
+    %% === KOMNATA HARFY - Víla s harfou ===
+    UnlockGate --> Komnata[Lokace: Komnata harfy]
+    Komnata --> MeetFairy[Setkat se s vílou s harfou]
+    MeetFairy --> ListenHarp[Poslouchat harfu]
+    ListenHarp --> FairyShowsWay[Víla ukáže cestu k trůnu]
+
+    %% === TRŮNNÍ SÁL - Aria a výhra ===
+    FairyShowsWay --> TrunniSal[Lokace: Trůnní sál]
+    TrunniSal --> MeetAria[Setkat se s Aria]
+    MeetAria --> TalkAria[Mluv s Aria - asistentka královny]
+    TalkAria --> LearnSecret[Zjistit tajemství království]
+    LearnSecret --> MakeWish[Vyslovit přání]
+    MakeWish --> Victory([VÝHRA - Hra dokončena!]):::victoryStyle
+
+    %% === STYLING ===
+    classDef startStyle fill:#90EE90,stroke:#2E8B57,stroke-width:3px,color:#000
+    classDef victoryStyle fill:#FFD700,stroke:#FF8C00,stroke-width:3px,color:#000
+    classDef deathStyle fill:#FF6B6B,stroke:#DC143C,stroke-width:3px,color:#000

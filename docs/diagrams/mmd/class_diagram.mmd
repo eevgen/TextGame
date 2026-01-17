@@ -1,0 +1,232 @@
+classDiagram
+    %% ============================================================
+    %% MODEL LAYER (6 classes)
+    %% ============================================================
+
+    class Location {
+        -String nazev
+        -String popis
+        -Map~String, Location~ vychody
+        -List~Item~ predmety
+        -List~NPC~ postavy
+        -boolean zamceno
+        +getNazev() String
+        +getPopis() String
+        +pridatVychod(smer: String, lokace: Location) void
+        +getVychod(smer: String) Location
+        +pridatPredmet(predmet: Item) void
+        +odebratPredmet(predmet: Item) void
+        +getPredmety() List~Item~
+        +pridatPostavu(postava: NPC) void
+        +getPostavy() List~NPC~
+        +jeZamceno() boolean
+        +odemknout() void
+    }
+
+    class Item {
+        -String nazev
+        -String popis
+        -boolean prenositelny
+        -boolean pouzitelny
+        +getNazev() String
+        +getPopis() String
+        +jePrenositelny() boolean
+        +jePouzitelny() boolean
+    }
+
+    class Character {
+        <<abstract>>
+        -String jmeno
+        -Location aktualniLokace
+        -Backpack batoh
+        +getJmeno() String
+        +getAktualniLokace() Location
+        +setAktualniLokace(lokace: Location) void
+        +getBatoh() Backpack
+    }
+
+    class Player {
+        -int zdravi
+        +getZdravi() int
+        +setZdravi(zdravi: int) void
+    }
+
+    class NPC {
+        -String dialog
+        -Item odmenaPredmet
+        -boolean promluveno
+        +getDialog() String
+        +promluvitSi() String
+        +datOdmenu() Item
+        +bylPromluveno() boolean
+    }
+
+    class Backpack {
+        -List~Item~ predmety
+        -int maximalniKapacita
+        +pridatPredmet(predmet: Item) boolean
+        +odebratPredmet(predmet: Item) boolean
+        +getPredmety() List~Item~
+        +maPredmet(nazev: String) boolean
+        +jePlny() boolean
+    }
+
+    %% ============================================================
+    %% COMMAND PATTERN (10 classes: 1 interface + 9 concrete)
+    %% ============================================================
+
+    class Command {
+        <<interface>>
+        +execute() void
+        +undo() void
+    }
+
+    class GoCommand {
+        -Player hrac
+        -String smer
+        -Location predchoziLokace
+        +execute() void
+        +undo() void
+    }
+
+    class PickupCommand {
+        -Player hrac
+        -Item predmet
+        +execute() void
+        +undo() void
+    }
+
+    class DropCommand {
+        -Player hrac
+        -Item predmet
+        +execute() void
+        +undo() void
+    }
+
+    class InventoryCommand {
+        -Player hrac
+        +execute() void
+        +undo() void
+    }
+
+    class ExamineCommand {
+        -Player hrac
+        -String cil
+        +execute() void
+        +undo() void
+    }
+
+    class TalkCommand {
+        -Player hrac
+        -String jmenoPostavy
+        +execute() void
+        +undo() void
+    }
+
+    class UseCommand {
+        -Player hrac
+        -String nazevPredmetu
+        +execute() void
+        +undo() void
+    }
+
+    class HelpCommand {
+        +execute() void
+        +undo() void
+    }
+
+    class EndCommand {
+        -GameController gameController
+        +execute() void
+        +undo() void
+    }
+
+    %% ============================================================
+    %% CONTROLLERS (2 classes)
+    %% ============================================================
+
+    class GameController {
+        -Player hrac
+        -Location startovniLokace
+        -CommandController commandController
+        -CommandParser parser
+        -boolean hraProbiha
+        +start() void
+        +zpracovatPrikaz(vstup: String) void
+        +zkontrolovatVyhru() boolean
+        +ukoncitHru() void
+    }
+
+    class CommandController {
+        -Stack~Command~ historie
+        +executeCommand(command: Command) void
+        +undo() void
+        +getHistorie() Stack~Command~
+    }
+
+    %% ============================================================
+    %% SERVICES (4 classes)
+    %% ============================================================
+
+    class CommandParser {
+        -CommandFactory factory
+        +parsovat(vstup: String) Command
+        +rozdelitVstup(vstup: String) String[]
+    }
+
+    class CommandFactory {
+        -Player hrac
+        -GameController gameController
+        +vytvorPrikaz(nazev: String, parametry: String[]) Command
+    }
+
+    class LocationService {
+        +vytvorSvet() Location
+        +spojitLokace(lokace1: Location, smer: String, lokace2: Location) void
+        +najitLokaci(nazev: String) Location
+    }
+
+    class BackpackService {
+        +pridatPredmety(batoh: Backpack, predmety: List~Item~) void
+        +odebratPredmety(batoh: Backpack, predmety: List~Item~) void
+        +zobrazitPredmety(batoh: Backpack) String
+    }
+
+    %% ============================================================
+    %% RELATIONSHIPS - Только ключевые связи
+    %% ============================================================
+
+    %% Наследование
+    Player --|> Character
+    NPC --|> Character
+
+    %% Реализация Command интерфейса
+    GoCommand ..|> Command
+    PickupCommand ..|> Command
+    DropCommand ..|> Command
+    InventoryCommand ..|> Command
+    ExamineCommand ..|> Command
+    TalkCommand ..|> Command
+    UseCommand ..|> Command
+    HelpCommand ..|> Command
+    EndCommand ..|> Command
+
+    %% Композиция и агрегация модели
+    Character *-- Backpack
+    Character --> Location
+    Location o-- Item
+    Location o-- NPC
+    Backpack o-- Item
+
+    %% Зависимости контроллеров
+    GameController --> Player
+    GameController --> CommandController
+    GameController --> CommandParser
+
+    CommandController --> Command
+
+    CommandParser --> CommandFactory
+    CommandFactory ..> Command
+
+    %% Note: Все команды работают с Player через поле -Player hrac
+    %% Note: CommandFactory создает все 9 типов команд
