@@ -2,23 +2,17 @@ package org.example.service;
 
 import org.example.model.Backpack;
 import org.example.model.Item;
+import java.util.List;
 
 public class BackpackService {
 
-    public static String getAllItemsString(Backpack backpack) {
-        StringBuilder finalString = new StringBuilder();
-        for(Item item : backpack.getItems()) {
-            finalString.append(item.getTitle()).append(" ");
-        }
-        return finalString.toString();
+    public void pridatPredmety(Backpack batoh, List<Item> predmety) {
     }
 
-    public static void addItems(Backpack backpack, Item... items) {
-        backpack.add(items);
+    public void odebratPredmety(Backpack batoh, List<Item> predmety) {
     }
 
-    public static void removeItems(Backpack backpack, Item... items) {
-        backpack.remove(items);
+    public String zobrazitPredmety(Backpack batoh) {
+        return null;
     }
-
 }

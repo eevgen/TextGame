@@ -1,22 +1,44 @@
 package org.example.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class Backpack {
 
-    private static final ArrayList<Item> items = new ArrayList<>();
+    private List<Item> predmety;
+    private int maximalniKapacita;
 
-    public void add(Item... itemsToAdd) {
-        items.addAll(Arrays.asList(itemsToAdd));
+    public Backpack(int maximalniKapacita) {
+        this.predmety = new ArrayList<>();
+        this.maximalniKapacita = maximalniKapacita;
     }
 
-    public void remove(Item... itemsToRemove) {
-        items.removeAll(Arrays.asList(itemsToRemove));
+    public boolean pridatPredmet(Item predmet) {
+        if (!jePlny()) {
+            predmety.add(predmet);
+            return true;
+        }
+        return false;
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
+    public boolean odebratPredmet(Item predmet) {
+        return predmety.remove(predmet);
     }
 
+    public List<Item> getPredmety() {
+        return predmety;
+    }
+
+    public boolean maPredmet(String nazev) {
+        for (Item predmet : predmety) {
+            if (predmet.getNazev().equals(nazev)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean jePlny() {
+        return predmety.size() >= maximalniKapacita;
+    }
 }
