@@ -1,18 +1,30 @@
 package org.example.model;
 
-public class Character {
+public abstract class Character {
 
-    private Backpack backpack;
+    private String jmeno;
+    private Location aktualniLokace;
+    private Backpack batoh;
 
-    public Character(Backpack backpack) {
-        this.backpack = backpack;
+    public Character(String jmeno, Location aktualniLokace, Backpack batoh) {
+        this.jmeno = jmeno;
+        this.aktualniLokace = aktualniLokace;
+        this.batoh = batoh;
     }
 
-    public Backpack getBackpack() {
-        return backpack;
+    public String getJmeno() {
+        return jmeno;
     }
 
-    public void setBackpack(Backpack backpack) {
-        this.backpack = backpack;
+    public Location getAktualniLokace() {
+        return aktualniLokace;
+    }
+
+    public void setAktualniLokace(Location aktualniLokace) {
+        this.aktualniLokace = aktualniLokace;
+    }
+
+    public Backpack getBatoh() {
+        return batoh;
     }
 }

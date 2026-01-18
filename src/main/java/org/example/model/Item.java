@@ -2,24 +2,31 @@ package org.example.model;
 
 public class Item {
 
-    private String title;
-    private String description;
+    private String nazev;
+    private String popis;
+    private boolean prenositelny;
+    private boolean pouzitelny;
 
-    public Item(String title, String description) {
-        this.title = title;
-        this.description = description;
+    public Item(String nazev, String popis, boolean prenositelny, boolean pouzitelny) {
+        this.nazev = nazev;
+        this.popis = popis;
+        this.prenositelny = prenositelny;
+        this.pouzitelny = pouzitelny;
     }
 
-
-    public String getTitle() {
-        return title;
+    public String getNazev() {
+        return nazev;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getPopis() {
+        return popis;
     }
 
-    public String getDescription() {
-        return description;
+    public boolean jePrenositelny() {
+        return prenositelny;
+    }
+
+    public boolean jePouzitelny() {
+        return pouzitelny;
     }
 }
