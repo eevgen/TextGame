@@ -1,25 +1,17 @@
 package org.example.service;
 
-import org.example.model.Backpack;
-import org.example.model.Item;
 import org.example.model.Location;
 
 public class LocationService {
 
-    public static String getAllItemsString(Location location) {
-        StringBuilder finalString = new StringBuilder();
-        for(Item item : location.getItems()) {
-            finalString.append(item.getTitle()).append(" ");
-        }
-        return finalString.toString();
+    public Location vytvorSvet() {
+        return null;
     }
 
-    public static void addItems(Location location, Item... items) {
-        location.add(items);
+    public void spojitLokace(Location lokace1, String smer, Location lokace2) {
     }
 
-    public static void removeItems(Location location, Item... items) {
-        location.remove(items);
+    public Location najitLokaci(String nazev) {
+        return null;
     }
-
 }

@@ -1,36 +1,69 @@
 package org.example.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Location {
 
-    private String name;
+    private String nazev;
+    private String popis;
+    private Map<String, Location> vychody;
+    private List<Item> predmety;
+    private List<NPC> postavy;
+    private boolean zamceno;
 
-    ArrayList<Item> items =  new ArrayList<>();
-
-    public Location(String name, ArrayList<Item> items) {
-        this.name = name;
-        this.items = items;
+    public Location(String nazev, String popis) {
+        this.nazev = nazev;
+        this.popis = popis;
+        this.vychody = new HashMap<>();
+        this.predmety = new ArrayList<>();
+        this.postavy = new ArrayList<>();
+        this.zamceno = false;
     }
 
-    public void add(Item... itemsToAdd) {
-        items.addAll(List.of(itemsToAdd));
+    public String getNazev() {
+        return nazev;
     }
 
-    public void remove(Item... itemsToRemove) {
-        items.removeAll(List.of(itemsToRemove));
+    public String getPopis() {
+        return popis;
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
+    public void pridatVychod(String smer, Location lokace) {
+        vychody.put(smer, lokace);
     }
 
-    public String getName() {
-        return name;
+    public Location getVychod(String smer) {
+        return vychody.get(smer);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void pridatPredmet(Item predmet) {
+        predmety.add(predmet);
+    }
+
+    public void odebratPredmet(Item predmet) {
+        predmety.remove(predmet);
+    }
+
+    public List<Item> getPredmety() {
+        return predmety;
+    }
+
+    public void pridatPostavu(NPC postava) {
+        postavy.add(postava);
+    }
+
+    public List<NPC> getPostavy() {
+        return postavy;
+    }
+
+    public boolean jeZamceno() {
+        return zamceno;
+    }
+
+    public void odemknout() {
+        this.zamceno = false;
     }
 }
