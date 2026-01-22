@@ -2,10 +2,12 @@
   {
     "id": "puda",
     "name": "Půda",
-    "description": "Stará, zaprášená půda v domě babičky. Mezi starými krabicemi a rodinými věcmi leží stará kniha v kůži, ze které vypadla tajemná mapa do Království víl.",
+    "description": "Stará, zaprášená půda v domě babičky. Mezi starými krabicemi a rodinnými věcmi leží stará kniha v kůži, ze které vypadla tajemná mapa do Království víl.",
     "exits": {
       "jih": "dum_babicky"
-    }
+    },
+    "items": ["mapa", "kniha"],
+    "characters": []
   },
   {
     "id": "dum_babicky",
@@ -14,7 +16,9 @@
     "exits": {
       "sever": "puda",
       "jih": "vesnice"
-    }
+    },
+    "items": [],
+    "characters": ["babicka"]
   },
   {
     "id": "vesnice",
@@ -23,7 +27,9 @@
     "exits": {
       "sever": "dum_babicky",
       "jih": "zacarovany_les"
-    }
+    },
+    "items": ["mec"],
+    "characters": ["starosta", "iris", "rose"]
   },
   {
     "id": "zacarovany_les",
@@ -33,7 +39,9 @@
       "sever": "vesnice",
       "vychod": "doupe_selem",
       "jih": "tabor_goblinu"
-    }
+    },
+    "items": [],
+    "characters": []
   },
   {
     "id": "doupe_selem",
@@ -41,7 +49,9 @@
     "description": "Temné místo, kde číhají divoké šelmy. Jejich oči svítí ve tmě. Bez meče je nebezpečné pokračovat dál.",
     "exits": {
       "zapad": "zacarovany_les"
-    }
+    },
+    "items": [],
+    "characters": ["selmy"]
   },
   {
     "id": "tabor_goblinu",
@@ -50,7 +60,9 @@
     "exits": {
       "sever": "zacarovany_les",
       "jih": "zlata_brana"
-    }
+    },
+    "items": ["klic"],
+    "characters": ["goblin"]
   },
   {
     "id": "zlata_brana",
@@ -59,7 +71,9 @@
     "exits": {
       "sever": "tabor_goblinu",
       "jih": "komnata_harfy"
-    }
+    },
+    "items": [],
+    "characters": []
   },
   {
     "id": "komnata_harfy",
@@ -68,7 +82,9 @@
     "exits": {
       "sever": "zlata_brana",
       "jih": "trunni_sal"
-    }
+    },
+    "items": [],
+    "characters": ["vila"]
   },
   {
     "id": "trunni_sal",
@@ -76,6 +92,8 @@
     "description": "Nádherný trůnní sál Království víl. Zlaté sloupy podpírají vysoký strop zdobený hvězdami. Na trůnu sedí královna a vedle ní stojí její asistentka Aria. Toto je cíl Jackovy cesty.",
     "exits": {
       "sever": "komnata_harfy"
-    }
+    },
+    "items": [],
+    "characters": ["kralovna", "aria"]
   }
 ]
