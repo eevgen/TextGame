@@ -1,0 +1,81 @@
+[
+  {
+    "id": "puda",
+    "name": "Půda",
+    "description": "Stará, zaprášená půda v domě babičky. Mezi starými krabicemi a rodinými věcmi leží stará kniha v kůži, ze které vypadla tajemná mapa do Království víl.",
+    "exits": {
+      "jih": "dum_babicky"
+    }
+  },
+  {
+    "id": "dum_babicky",
+    "name": "Dům babičky",
+    "description": "Útulný dům, kde Jack žije se svou babičkou. Je to bezpečné místo plné vzpomínek. Babička stojí u dveří a čeká na rozloučení.",
+    "exits": {
+      "sever": "puda",
+      "jih": "vesnice"
+    }
+  },
+  {
+    "id": "vesnice",
+    "name": "Vesnice",
+    "description": "Malá poklidná vesnice. Na náměstí stojí starosta a poblíž čekají Iris a Rose, připravené pomoci Jackovi na jeho cestě. Na jihu se tyčí temný les.",
+    "exits": {
+      "sever": "dum_babicky",
+      "jih": "zacarovany_les"
+    }
+  },
+  {
+    "id": "zacarovany_les",
+    "name": "Začarovaný les",
+    "description": "Hlavní rozcestí v nebezpečném lese. Stromy jsou vysoké a temné, vzduch je plný tajemství. Na východě je slyšet vrčení šelem, na jihu táboří goblini.",
+    "exits": {
+      "sever": "vesnice",
+      "vychod": "doupe_selem",
+      "jih": "tabor_goblinu"
+    }
+  },
+  {
+    "id": "doupe_selem",
+    "name": "Doupě šelem",
+    "description": "Temné místo, kde číhají divoké šelmy. Jejich oči svítí ve tmě. Bez meče je nebezpečné pokračovat dál.",
+    "exits": {
+      "zapad": "zacarovany_les"
+    }
+  },
+  {
+    "id": "tabor_goblinu",
+    "name": "Tábor goblinů",
+    "description": "Sídlo mazaných goblinů. Kolem ohně sedí několik zelených tvorů a něco plánují. Je třeba použít lest nebo vyjednávat, aby vás pustili dál.",
+    "exits": {
+      "sever": "zacarovany_les",
+      "jih": "zlata_brana"
+    }
+  },
+  {
+    "id": "zlata_brana",
+    "name": "Zlatá brána",
+    "description": "Monumentální zlatá brána zdobená vílími symboly. Je to vstup do Království víl, ale brána je zamčena magií. K otevření je potřeba zlatý klíč.",
+    "exits": {
+      "sever": "tabor_goblinu",
+      "jih": "komnata_harfy"
+    }
+  },
+  {
+    "id": "komnata_harfy",
+    "name": "Komnata harfy",
+    "description": "Malá, krásně osvětlená místnost. Víla sedí u zlaté harfy a hraje nebeskou melodii. Ukazuje cestu k trůnnímu sálu na jihu.",
+    "exits": {
+      "sever": "zlata_brana",
+      "jih": "trunni_sal"
+    }
+  },
+  {
+    "id": "trunni_sal",
+    "name": "Trůnní sál",
+    "description": "Nádherný trůnní sál Království víl. Zlaté sloupy podpírají vysoký strop zdobený hvězdami. Na trůnu sedí královna a vedle ní stojí její asistentka Aria. Toto je cíl Jackovy cesty.",
+    "exits": {
+      "sever": "komnata_harfy"
+    }
+  }
+]
