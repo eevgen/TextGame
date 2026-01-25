@@ -1,17 +1,112 @@
 package org.example.service;
 
+import com.google.gson.Gson;
+import org.example.dto.LocationDTO;
+import org.example.enums.Direction;
+import org.example.model.Item;
 import org.example.model.Location;
+import org.example.model.NPC;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LocationService {
 
-    public Location vytvorSvet() {
-        return null;
+    private static  final String PATH_TO_WORLD_FILE_JSON = "docs/json/world.json";
+
+    private Map<String, Location> vsechnyLokace = new HashMap<>();
+
+    public void vytvorSvet() {
+        Reader reader = null;
+        try {
+
+            Gson gson = new Gson();
+
+            reader = new FileReader(PATH_TO_WORLD_FILE_JSON);
+            LocationDTO[] locationDTOS = gson.fromJson(reader, LocationDTO[].class);
+
+            for (LocationDTO dto : locationDTOS) {
+                Location location = new Location(dto.getName(), dto.getDescription());
+
+                // add items
+                for (String itemId : dto.getItems()) {
+                    Item item = ItemService.createItem(itemId);
+                    location.pridatPredmet(item);
+                }
+
+                // add characters
+                for (String charName : dto.getCharacters()) {
+                    NPC postava = vytvorPostavu(charName);
+                    location.pridatPostavu(postava);
+                }
+
+                vsechnyLokace.put(dto.getId(), location);
+            }
+
+            for (LocationDTO dto : locationDTOS) {
+                Location location = vsechnyLokace.get(dto.getId());
+                dto.getExits().forEach((key, value) -> {
+                    connectLocation(location,
+                            Direction.fromString(key),
+                            vsechnyLokace.get(value));
+                });
+            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+
+            try {
+                reader.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
     }
 
-    public void spojitLokace(Location lokace1, String smer, Location lokace2) {
+    private Item vytvorPredmet(String nazev) {
+
+        return switch (nazev) {
+            case "mapa" -> new Item("mapa", "Stará mapa do Království víl", true, true);
+            case "kniha" -> new Item("kniha", "Stará kniha v kůži", true, false);
+            case "mec" -> new Item("mec", "Ostrý meč na obranu", true, true);
+            case "klic" -> new Item("klic", "Zlatý klíč k bráně", true, true);
+            default -> new Item(nazev, "Neznámý předmět", true, false);
+        };
     }
 
-    public Location najitLokaci(String nazev) {
-        return null;
+    private NPC vytvorPostavu(String nazev) {
+        return switch (nazev) {
+            case "babicka" -> new NPC("Babička", null, null,
+                    "Buď opatrný, Jacku! Cesta je nebezpečná.", null);
+            case "iris" -> new NPC("Iris", null, null,
+                    "Pomůžu ti na tvé cestě.", null);
+            case "rose" -> new NPC("Rose", null, null,
+                    "Vezmi si tento meč, budeš ho potřebovat.",
+                    new Item("mec", "Ostrý meč", true, true));
+            default -> new NPC(nazev, null, null, "...", null);
+        };
+    }
+
+    public Location getStartLocation() {
+        return vsechnyLokace.get("puda");
+    }
+
+    public Location findLocation(String id) {
+        return vsechnyLokace.get(id);
+    }
+
+    public void connectLocation(Location location1, Direction direction, Location location2) {
+        location1.pridatVychod(direction, location2);
+    }
+
+    public Map<String, Location> getAllLocations() {
+        return vsechnyLokace;
     }
 }

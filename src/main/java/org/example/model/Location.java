@@ -1,15 +1,21 @@
 package org.example.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.example.enums.Direction;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
+@Setter
 public class Location {
 
     private String nazev;
     private String popis;
-    private Map<String, Location> vychody;
+    private Map<Direction, Location> vychody;
     private List<Item> predmety;
     private List<NPC> postavy;
     private boolean zamceno;
@@ -23,20 +29,12 @@ public class Location {
         this.zamceno = false;
     }
 
-    public String getNazev() {
-        return nazev;
-    }
-
-    public String getPopis() {
-        return popis;
-    }
-
-    public void pridatVychod(String smer, Location lokace) {
+    public void pridatVychod(Direction smer, Location lokace) {
         vychody.put(smer, lokace);
     }
 
     public Location getVychod(String smer) {
-        return vychody.get(smer);
+        return vychody.get(Direction.fromString(smer));
     }
 
     public void pridatPredmet(Item predmet) {
@@ -47,16 +45,8 @@ public class Location {
         predmety.remove(predmet);
     }
 
-    public List<Item> getPredmety() {
-        return predmety;
-    }
-
     public void pridatPostavu(NPC postava) {
         postavy.add(postava);
-    }
-
-    public List<NPC> getPostavy() {
-        return postavy;
     }
 
     public boolean jeZamceno() {
@@ -66,4 +56,13 @@ public class Location {
     public void odemknout() {
         this.zamceno = false;
     }
+
+    public void showExits() {
+        System.out.println("Východy: ");
+        for(Direction direction : vychody.keySet()) {
+            System.out.println(direction.getTitle() + " ");
+        }
+        System.out.println();
+    }
+
 }

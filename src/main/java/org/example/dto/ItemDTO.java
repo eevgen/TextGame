@@ -1,17 +1,15 @@
-package org.example.model;
+package org.example.dto;
 
-import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-public class Item {
-
+public class ItemDTO {
     private String id;
-    private String nazev;
-    private String popis;
+    private String name;
+    private String description;
     private boolean prenositelny;
     private boolean pouzitelny;
 

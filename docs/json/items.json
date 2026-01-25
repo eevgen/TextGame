@@ -1,0 +1,9 @@
+feat: add JSON loading for locations and items with command system
+
+- Add Gson and Lombok dependencies
+- Add LocationDTO, ItemDTO for JSON parsing
+- Add Direction enum for navigation
+- Add ItemService for item management
+- Implement LocationService.vytvorSvet() with two-pass loading
+- Add CommandParser and CommandFactory
+- Update Location, Item models
