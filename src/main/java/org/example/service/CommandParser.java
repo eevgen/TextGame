@@ -1,19 +1,21 @@
 package org.example.service;
 
+import lombok.Getter;
 import org.example.command.Command;
 import org.example.model.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@Getter
 public class CommandParser {
 
     private CommandFactory factory;
     private Player player;
 
-    public CommandParser(Player player) {
-        this.factory = new CommandFactory(player);
-        this.player = player;
+    public CommandParser(CommandFactory factory) {
+        this.factory = factory;
+        player = factory.getPlayer();
     }
 
     public Command parsovat(String vstup) {

@@ -34,7 +34,12 @@ public class Location {
     }
 
     public Location getVychod(String smer) {
-        return vychody.get(Direction.fromString(smer));
+        try {
+            Direction direction = Direction.fromString(smer);
+            return vychody.get(direction);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     public void pridatPredmet(Item predmet) {
@@ -43,6 +48,15 @@ public class Location {
 
     public void odebratPredmet(Item predmet) {
         predmety.remove(predmet);
+    }
+
+    public Item findItem(String id) {
+        for (Item item : predmety) {
+            if (item.getId().equalsIgnoreCase(id)) {
+                return item;
+            }
+        }
+        return null;
     }
 
     public void pridatPostavu(NPC postava) {
@@ -58,9 +72,9 @@ public class Location {
     }
 
     public void showExits() {
-        System.out.println("Východy: ");
-        for(Direction direction : vychody.keySet()) {
-            System.out.println(direction.getTitle() + " ");
+        System.out.print("Východy: ");
+        for (Direction direction : vychody.keySet()) {
+            System.out.print(direction.getJsonKey() + " ");
         }
         System.out.println();
     }

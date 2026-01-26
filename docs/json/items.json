@@ -1,9 +1,30 @@
-feat: add JSON loading for locations and items with command system
-
-- Add Gson and Lombok dependencies
-- Add LocationDTO, ItemDTO for JSON parsing
-- Add Direction enum for navigation
-- Add ItemService for item management
-- Implement LocationService.vytvorSvet() with two-pass loading
-- Add CommandParser and CommandFactory
-- Update Location, Item models
+[
+  {
+    "id": "mapa",
+    "name": "Mapa",
+    "description": "Stará mapa do Království víl",
+    "prenositelny": true,
+    "pouzitelny": true
+  },
+  {
+    "id": "kniha",
+    "name": "Kniha",
+    "description": "Stará kniha v kůži",
+    "prenositelny": true,
+    "pouzitelny": false
+  },
+  {
+    "id": "mec",
+    "name": "Meč",
+    "description": "Ostrý meč na obranu proti šelmám",
+    "prenositelny": true,
+    "pouzitelny": true
+  },
+  {
+    "id": "klic",
+    "name": "Klíč",
+    "description": "Zlatý klíč k bráně Království víl",
+    "prenositelny": true,
+    "pouzitelny": true
+  }
+]

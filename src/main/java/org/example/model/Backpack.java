@@ -30,12 +30,16 @@ public class Backpack {
     }
 
     public boolean maPredmet(String nazev) {
+        return findItem(nazev) != null;
+    }
+
+    public Item findItem(String id) {
         for (Item predmet : predmety) {
-            if (predmet.getNazev().equals(nazev)) {
-                return true;
+            if (predmet.getId().equalsIgnoreCase(id)) {
+                return predmet;
             }
         }
-        return false;
+        return null;
     }
 
     public boolean jePlny() {

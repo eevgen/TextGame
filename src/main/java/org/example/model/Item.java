@@ -15,5 +15,4 @@ public class Item {
     private boolean prenositelny;
     private boolean pouzitelny;
 
-
 }

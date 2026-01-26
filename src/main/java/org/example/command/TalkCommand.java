@@ -6,9 +6,9 @@ import org.example.model.Player;
 public class TalkCommand implements Command {
 
     private Player hrac;
-    private NPC postava;
+    private String postava;
 
-    public TalkCommand(Player hrac, NPC postava) {
+    public TalkCommand(Player hrac, String postava) {
         this.hrac = hrac;
         this.postava = postava;
     }

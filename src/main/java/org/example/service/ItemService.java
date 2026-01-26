@@ -54,7 +54,7 @@ public class ItemService {
         return allItems.get(id);
     }
 
-    public static Item createItem(String id) {
+    public Item createItem(String id) {
         Item original = allItems.get(id);
         if(original == null) {
             return null;

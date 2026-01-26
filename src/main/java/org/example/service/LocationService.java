@@ -21,7 +21,7 @@ public class LocationService {
 
     private Map<String, Location> vsechnyLokace = new HashMap<>();
 
-    public void vytvorSvet() {
+    public void vytvorSvet(ItemService itemService) {
         Reader reader = null;
         try {
 
@@ -35,7 +35,7 @@ public class LocationService {
 
                 // add items
                 for (String itemId : dto.getItems()) {
-                    Item item = ItemService.createItem(itemId);
+                    Item item = itemService.createItem(itemId);
                     location.pridatPredmet(item);
                 }
 
@@ -70,17 +70,6 @@ public class LocationService {
         }
     }
 
-    private Item vytvorPredmet(String nazev) {
-
-        return switch (nazev) {
-            case "mapa" -> new Item("mapa", "Stará mapa do Království víl", true, true);
-            case "kniha" -> new Item("kniha", "Stará kniha v kůži", true, false);
-            case "mec" -> new Item("mec", "Ostrý meč na obranu", true, true);
-            case "klic" -> new Item("klic", "Zlatý klíč k bráně", true, true);
-            default -> new Item(nazev, "Neznámý předmět", true, false);
-        };
-    }
-
     private NPC vytvorPostavu(String nazev) {
         return switch (nazev) {
             case "babicka" -> new NPC("Babička", null, null,
@@ -89,7 +78,7 @@ public class LocationService {
                     "Pomůžu ti na tvé cestě.", null);
             case "rose" -> new NPC("Rose", null, null,
                     "Vezmi si tento meč, budeš ho potřebovat.",
-                    new Item("mec", "Ostrý meč", true, true));
+                    null);
             default -> new NPC(nazev, null, null, "...", null);
         };
     }
