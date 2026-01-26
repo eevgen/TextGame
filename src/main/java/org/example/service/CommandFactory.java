@@ -18,7 +18,7 @@ public class CommandFactory {
         this.player = player;
     }
 
-    public Command vytvorPrikaz(String nazev, String parametr) {
+    public Command makeCommand(String nazev, String parametr) {
 
         if(nazev == null
         ) {

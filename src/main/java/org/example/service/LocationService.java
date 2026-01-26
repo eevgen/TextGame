@@ -33,33 +33,16 @@ public class LocationService {
             for (LocationDTO dto : locationDTOS) {
                 Location location = new Location(dto.getName(), dto.getDescription());
 
+                // set locked status and unlock items
+                location.setLocked(dto.isLocked());
+                if (dto.getUnlockItems() != null) {
+                    location.setUnlockItems(dto.getUnlockItems());
+                }
+
                 // add items
                 for (String itemId : dto.getItems()) {
                     Item item = itemService.createItem(itemId);
                     location.addItem(item);
-
-                if(!location.getUnlockItems().isEmpty()) {
-                    location.setLocked(true);
-
-                    List<String> unlockItemIds = dto.getUnlockItems();
-
-                    //if there is only one item that can unlock the location
-                    if(unlockItemIds.size() == 1
-                        && unlockItemIds.get(0).equals(itemId)) {
-                        location.getUnlockItems().add(itemId);
-                    } else {
-
-                        //if there are multiple items that can unlock the location
-                        for (String unlockItemId : unlockItemIds) {
-                            if(unlockItemId.equals(itemId)) {
-                                location.getUnlockItems().add(itemId);
-                            }
-                        }
-
-                    }
-
-                }
-
                 }
 
                 // add characters

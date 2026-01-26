@@ -89,4 +89,14 @@ public class Location {
         System.out.println();
     }
 
+    public String getUnlockItemsIdsText() {
+
+        StringBuilder resultString = new StringBuilder();
+
+        for (String unlockItemId : unlockItems) {
+            resultString.append(unlockItemId).append(" ");
+        }
+        return resultString.toString();
+    }
+
 }

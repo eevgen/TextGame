@@ -18,19 +18,19 @@ public class CommandParser {
         player = factory.getPlayer();
     }
 
-    public Command parsovat(String vstup) {
+    public Command parse(String input) {
 
-        if (vstup == null || vstup.trim().isEmpty()) {
+        if (input == null || input.trim().isEmpty()) {
             return null;
         }
 
-        String[] words = rozdelitVstup(vstup);
+        String[] words = divideInput(input);
 
-        return factory.vytvorPrikaz(words[0],
+        return factory.makeCommand(words[0],
                 words.length > 1 ? words[1] : null);
     }
 
-    public String[] rozdelitVstup(String vstup) {
-        return vstup.trim().toLowerCase().split("\\s+");
+    public String[] divideInput(String input) {
+        return input.trim().toLowerCase().split("\\s+");
     }
 }

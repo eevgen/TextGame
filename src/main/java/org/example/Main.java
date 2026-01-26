@@ -17,7 +17,7 @@ public class Main {
         ItemService itemService = new ItemService();
 
         itemService.scrapItems();
-        locationService.vytvorSvet(itemService);
+        locationService.createWorld(itemService);
 
         Location startLocation = locationService.getStartLocation();
         Backpack batoh = new Backpack(10);
@@ -25,7 +25,7 @@ public class Main {
 
         CommandFactory factory = new CommandFactory(hrac, itemService);
         CommandParser parser = new CommandParser(factory);
-        GameController controller = new GameController(parser);
+        GameController controller = new GameController(parser, locationService);
 
         controller.start();
     }

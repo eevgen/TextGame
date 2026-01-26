@@ -6,19 +6,24 @@ import org.example.model.Player;
 import org.example.service.CommandFactory;
 import org.example.service.CommandParser;
 import org.example.service.ItemService;
+import org.example.service.LocationService;
 
 import java.util.Scanner;
 
 public class GameController {
 
+
+    private LocationService locationService;
     private Player hrac;
     private CommandParser parser;
+
     private boolean hraProbiha;
 
     private final static Scanner scanner = new Scanner(System.in);
 
-    public GameController(CommandParser parser) {
+    public GameController(CommandParser parser, LocationService locationService) {
         this.parser = parser;
+        this.locationService = locationService;
         this.hraProbiha = true;
         hrac = parser.getPlayer();
     }
@@ -29,7 +34,9 @@ public class GameController {
 
         zobrazitLokaci(hrac.getAktualniLokace());
 
+
         while (hraProbiha) {
+
             System.out.print("> ");
             String userInput = scanner.nextLine();
 
@@ -43,8 +50,14 @@ public class GameController {
         }
     }
 
+    public static void newPage() {
+        for (int i = 0; i < 30; i++) {
+            System.out.println();
+        }
+    }
+
     public void zpracovatPrikaz(String vstup) {
-        Command command = parser.parsovat(vstup);
+        Command command = parser.parse(vstup);
         if (command != null) {
             command.execute();
         }
@@ -52,9 +65,9 @@ public class GameController {
 
     public static void zobrazitLokaci(Location lokace) {
         System.out.println("\n══════════════════════════════════");
-        System.out.println("Lokace: " + lokace.getNazev());
+        System.out.println("Lokace: " + lokace.getName());
         System.out.println("──────────────────────────────────");
-        System.out.println(lokace.getPopis());
+        System.out.println(lokace.getDescription());
         lokace.showExits();
         System.out.println("══════════════════════════════════\n");
     }
