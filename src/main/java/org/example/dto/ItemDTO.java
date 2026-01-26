@@ -10,8 +10,8 @@ public class ItemDTO {
     private String id;
     private String name;
     private String description;
-    private boolean prenositelny;
-    private boolean pouzitelny;
+    private boolean portable;
+    private boolean usable;
 
 
 }

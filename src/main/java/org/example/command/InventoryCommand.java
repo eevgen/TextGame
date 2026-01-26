@@ -4,10 +4,10 @@ import org.example.model.Player;
 
 public class InventoryCommand implements Command {
 
-    private Player hrac;
+    private Player player;
 
-    public InventoryCommand(Player hrac) {
-        this.hrac = hrac;
+    public InventoryCommand(Player player) {
+        this.player = player;
     }
 
     @Override

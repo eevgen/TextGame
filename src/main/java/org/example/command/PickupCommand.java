@@ -5,12 +5,12 @@ import org.example.model.Player;
 
 public class PickupCommand implements Command {
 
-    private Player hrac;
-    private Item predmet;
+    private Player player;
+    private Item item;
 
-    public PickupCommand(Player hrac, Item predmet) {
-        this.hrac = hrac;
-        this.predmet = predmet;
+    public PickupCommand(Player player, Item item) {
+        this.player = player;
+        this.item = item;
     }
 
     @Override

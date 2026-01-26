@@ -6,13 +6,13 @@ import java.util.List;
 
 public class BackpackService {
 
-    public void pridatPredmety(Backpack batoh, List<Item> predmety) {
+    public void addItems(Backpack backpack, List<Item> items) {
     }
 
-    public void odebratPredmety(Backpack batoh, List<Item> predmety) {
+    public void removeItems(Backpack backpack, List<Item> items) {
     }
 
-    public String zobrazitPredmety(Backpack batoh) {
+    public String displayItems(Backpack backpack) {
         return null;
     }
 }

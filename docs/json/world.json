@@ -7,7 +7,9 @@
       "jih": "dum_babicky"
     },
     "items": ["mapa", "kniha"],
-    "characters": []
+    "characters": [],
+    "locked": true,
+    "unlock_items": ["mec"]
   },
   {
     "id": "dum_babicky",

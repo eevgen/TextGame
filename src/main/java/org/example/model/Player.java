@@ -2,18 +2,18 @@ package org.example.model;
 
 public class Player extends Character {
 
-    private int zdravi;
+    private int health;
 
-    public Player(String jmeno, Location aktualniLokace, Backpack batoh, int zdravi) {
-        super(jmeno, aktualniLokace, batoh);
-        this.zdravi = zdravi;
+    public Player(String name, Location currentLocation, Backpack backpack, int health) {
+        super(name, currentLocation, backpack);
+        this.health = health;
     }
 
-    public int getZdravi() {
-        return zdravi;
+    public int getHealth() {
+        return health;
     }
 
-    public void setZdravi(int zdravi) {
-        this.zdravi = zdravi;
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

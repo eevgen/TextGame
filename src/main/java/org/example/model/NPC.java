@@ -3,30 +3,30 @@ package org.example.model;
 public class NPC extends Character {
 
     private String dialog;
-    private Item odmenaPredmet;
-    private boolean promluveno;
+    private Item rewardItem;
+    private boolean spoken;
 
-    public NPC(String jmeno, Location aktualniLokace, Backpack batoh, String dialog, Item odmenaPredmet) {
-        super(jmeno, aktualniLokace, batoh);
+    public NPC(String name, Location currentLocation, Backpack backpack, String dialog, Item rewardItem) {
+        super(name, currentLocation, backpack);
         this.dialog = dialog;
-        this.odmenaPredmet = odmenaPredmet;
-        this.promluveno = false;
+        this.rewardItem = rewardItem;
+        this.spoken = false;
     }
 
     public String getDialog() {
         return dialog;
     }
 
-    public String promluvitSi() {
-        promluveno = true;
+    public String speak() {
+        spoken = true;
         return dialog;
     }
 
-    public Item datOdmenu() {
-        return odmenaPredmet;
+    public Item giveReward() {
+        return rewardItem;
     }
 
-    public boolean bylPromluveno() {
-        return promluveno;
+    public boolean hasSpoken() {
+        return spoken;
     }
 }

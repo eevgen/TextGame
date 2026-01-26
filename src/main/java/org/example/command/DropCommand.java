@@ -5,12 +5,12 @@ import org.example.model.Player;
 
 public class DropCommand implements Command {
 
-    private Player hrac;
-    private Item predmet;
+    private Player player;
+    private Item item;
 
-    public DropCommand(Player hrac, Item predmet) {
-        this.hrac = hrac;
-        this.predmet = predmet;
+    public DropCommand(Player player, Item item) {
+        this.player = player;
+        this.item = item;
     }
 
     @Override

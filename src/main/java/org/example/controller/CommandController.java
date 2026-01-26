@@ -6,24 +6,24 @@ import java.util.Stack;
 
 public class CommandController {
 
-    private Stack<Command> historie;
+    private Stack<Command> history;
 
     public CommandController() {
-        this.historie = new Stack<>();
+        this.history = new Stack<>();
     }
 
     public void executeCommand(Command command) {
         command.execute();
-        historie.push(command);
+        history.push(command);
     }
 
     public void undo() {
-        if (!historie.isEmpty()) {
-            historie.pop().undo();
+        if (!history.isEmpty()) {
+            history.pop().undo();
         }
     }
 
-    public Stack<Command> getHistorie() {
-        return historie;
+    public Stack<Command> getHistory() {
+        return history;
     }
 }

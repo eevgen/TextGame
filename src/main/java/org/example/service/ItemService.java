@@ -29,8 +29,8 @@ public class ItemService {
                         dto.getId(),
                         dto.getName(),
                         dto.getDescription(),
-                        dto.isPrenositelny(),
-                        dto.isPouzitelny()
+                        dto.isPortable(),
+                        dto.isUsable()
                 );
 
                 allItems.put(item.getId(), item);
@@ -62,10 +62,10 @@ public class ItemService {
 
         return new Item (
                 original.getId(),
-                original.getNazev(),
-                original.getPopis(),
-                original.isPrenositelny(),
-                original.isPouzitelny()
+                original.getName(),
+                original.getDescription(),
+                original.isPortable(),
+                original.isUsable()
         );
     }
 }

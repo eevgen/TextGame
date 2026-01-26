@@ -4,12 +4,12 @@ import org.example.model.Player;
 
 public class ExamineCommand implements Command {
 
-    private Player hrac;
-    private String cil;
+    private Player player;
+    private String target;
 
-    public ExamineCommand(Player hrac, String cil) {
-        this.hrac = hrac;
-        this.cil = cil;
+    public ExamineCommand(Player player, String target) {
+        this.player = player;
+        this.target = target;
     }
 
     @Override

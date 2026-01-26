@@ -5,12 +5,12 @@ import org.example.model.Player;
 
 public class UseCommand implements Command {
 
-    private Player hrac;
-    private Item predmet;
+    private Player player;
+    private Item item;
 
-    public UseCommand(Player hrac, Item predmet) {
-        this.hrac = hrac;
-        this.predmet = predmet;
+    public UseCommand(Player player, Item item) {
+        this.player = player;
+        this.item = item;
     }
 
     @Override

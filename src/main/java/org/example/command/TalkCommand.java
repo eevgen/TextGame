@@ -5,12 +5,12 @@ import org.example.model.Player;
 
 public class TalkCommand implements Command {
 
-    private Player hrac;
-    private String postava;
+    private Player player;
+    private String character;
 
-    public TalkCommand(Player hrac, String postava) {
-        this.hrac = hrac;
-        this.postava = postava;
+    public TalkCommand(Player player, String character) {
+        this.player = player;
+        this.character = character;
     }
 
     @Override

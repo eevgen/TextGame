@@ -10,9 +10,9 @@ import lombok.Setter;
 public class Item {
 
     private String id;
-    private String nazev;
-    private String popis;
-    private boolean prenositelny;
-    private boolean pouzitelny;
+    private String name;
+    private String description;
+    private boolean portable;
+    private boolean usable;
 
 }

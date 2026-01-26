@@ -5,44 +5,44 @@ import java.util.List;
 
 public class Backpack {
 
-    private List<Item> predmety;
-    private int maximalniKapacita;
+    private List<Item> items;
+    private int maxCapacity;
 
-    public Backpack(int maximalniKapacita) {
-        this.predmety = new ArrayList<>();
-        this.maximalniKapacita = maximalniKapacita;
+    public Backpack(int maxCapacity) {
+        this.items = new ArrayList<>();
+        this.maxCapacity = maxCapacity;
     }
 
-    public boolean pridatPredmet(Item predmet) {
-        if (!jePlny()) {
-            predmety.add(predmet);
+    public boolean addItem(Item item) {
+        if (!isFull()) {
+            items.add(item);
             return true;
         }
         return false;
     }
 
-    public boolean odebratPredmet(Item predmet) {
-        return predmety.remove(predmet);
+    public boolean removeItem(Item item) {
+        return items.remove(item);
     }
 
-    public List<Item> getPredmety() {
-        return predmety;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public boolean maPredmet(String nazev) {
-        return findItem(nazev) != null;
+    public boolean hasItem(String name) {
+        return findItem(name) != null;
     }
 
     public Item findItem(String id) {
-        for (Item predmet : predmety) {
-            if (predmet.getId().equalsIgnoreCase(id)) {
-                return predmet;
+        for (Item item : items) {
+            if (item.getId().equalsIgnoreCase(id)) {
+                return item;
             }
         }
         return null;
     }
 
-    public boolean jePlny() {
-        return predmety.size() >= maximalniKapacita;
+    public boolean isFull() {
+        return items.size() >= maxCapacity;
     }
 }

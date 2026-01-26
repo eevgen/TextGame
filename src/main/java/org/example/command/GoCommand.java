@@ -17,19 +17,19 @@ public class GoCommand implements Command {
     @Override
     public void execute() {
 
-        Location currentLocation = player.getAktualniLokace();
-        System.out.println("You are now in " + currentLocation.getNazev() + ".");
-        GameController.zobrazitLokaci(currentLocation);
+        Location currentLocation = player.getCurrentLocation();
+        System.out.println("You are now in " + currentLocation.getName() + ".");
+        GameController.displayLocation(currentLocation);
 
-        Location nextLocation = currentLocation.getVychod(direction);
+        Location nextLocation = currentLocation.getExit(direction);
 
         if(nextLocation == null) {
             System.out.println("There is no exit in that direction.");
             return;
         }
 
-        player.setAktualniLokace(nextLocation);
-        System.out.println("You moved to " + nextLocation.getNazev() + ".");
+        player.setCurrentLocation(nextLocation);
+        System.out.println("You moved to " + nextLocation.getName() + ".");
 
     }
 
