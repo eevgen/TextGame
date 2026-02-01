@@ -13,47 +13,45 @@ import java.util.Map;
 @Setter
 public class Location {
 
-    private String name;
-    private String description;
-    private Map<Direction, Location> exits;
-    private List<Item> items;
-    private List<NPC> characters;
-    private boolean locked;
-    private List<String> unlockItems;
+    private String nazev;
+    private String popis;
+    private Map<Direction, Location> vychody;
+    private List<Item> predmety;
+    private List<NPC> postavy;
+    private boolean zamceno;
 
-    public Location(String name, String description) {
-        this.name = name;
-        this.description = description;
-        this.exits = new HashMap<>();
-        this.items = new ArrayList<>();
-        this.characters = new ArrayList<>();
-        this.locked = false;
-        this.unlockItems = new ArrayList<>();
+    public Location(String nazev, String popis) {
+        this.nazev = nazev;
+        this.popis = popis;
+        this.vychody = new HashMap<>();
+        this.predmety = new ArrayList<>();
+        this.postavy = new ArrayList<>();
+        this.zamceno = false;
     }
 
-    public void addExit(Direction direction, Location location) {
-        exits.put(direction, location);
+    public void pridatVychod(Direction smer, Location lokace) {
+        vychody.put(smer, lokace);
     }
 
-    public Location getExit(String direction) {
+    public Location getVychod(String smer) {
         try {
-            Direction dir = Direction.fromString(direction);
-            return exits.get(dir);
+            Direction direction = Direction.fromString(smer);
+            return vychody.get(direction);
         } catch (IllegalArgumentException e) {
             return null;
         }
     }
 
-    public void addItem(Item item) {
-        items.add(item);
+    public void pridatPredmet(Item predmet) {
+        predmety.add(predmet);
     }
 
-    public void removeItem(Item item) {
-        items.remove(item);
+    public void odebratPredmet(Item predmet) {
+        predmety.remove(predmet);
     }
 
     public Item findItem(String id) {
-        for (Item item : items) {
+        for (Item item : predmety) {
             if (item.getId().equalsIgnoreCase(id)) {
                 return item;
             }
@@ -61,42 +59,33 @@ public class Location {
         return null;
     }
 
-    public void addCharacter(NPC character) {
-        characters.add(character);
+    public void pridatPostavu(NPC postava) {
+        postavy.add(postava);
     }
 
-    public boolean isLocked() {
-        return locked;
+    public NPC findPostava(String jmeno) {
+        for (NPC npc : postavy) {
+            if (npc.getJmeno().equalsIgnoreCase(jmeno)) {
+                return npc;
+            }
+        }
+        return null;
     }
 
-    public void unlock() {
-        this.locked = false;
+    public boolean jeZamceno() {
+        return zamceno;
+    }
+
+    public void odemknout() {
+        this.zamceno = false;
     }
 
     public void showExits() {
         System.out.print("Východy: ");
-        for (Direction direction : exits.keySet()) {
-            System.out.print(direction.getId() + " ");
+        for (Direction direction : vychody.keySet()) {
+            System.out.print(direction.getJsonKey() + " ");
         }
         System.out.println();
-    }
-
-    public void showItems() {
-        System.out.print("Items: ");
-        for (Item item : items) {
-            System.out.print(item.getId() + " ");
-        }
-        System.out.println();
-    }
-
-    public String getUnlockItemsIdsText() {
-
-        StringBuilder resultString = new StringBuilder();
-
-        for (String unlockItemId : unlockItems) {
-            resultString.append(unlockItemId).append(" ");
-        }
-        return resultString.toString();
     }
 
 }

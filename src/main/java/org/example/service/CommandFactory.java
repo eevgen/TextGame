@@ -18,7 +18,7 @@ public class CommandFactory {
         this.player = player;
     }
 
-    public Command makeCommand(String nazev, String parametr) {
+    public Command vytvorPrikaz(String nazev, String parametr) {
 
         if(nazev == null
         ) {
@@ -27,12 +27,12 @@ public class CommandFactory {
 
         return switch (nazev) {
             case "jdi" -> new GoCommand(player, parametr);
-            case "vezmi" -> new PickupCommand(player, itemService.findItem(parametr));
-            case "poloz" -> new DropCommand(player, itemService.findItem(parametr));
+            case "vezmi" -> new PickupCommand(player, parametr);
+            case "poloz" -> new DropCommand(player, parametr);
             case "batoh" -> new InventoryCommand(player);
             case "prozkoumej" -> new ExamineCommand(player, parametr);
             case "mluv" -> new TalkCommand(player, parametr);
-            case "pouzij" -> new UseCommand(player, itemService.findItem(parametr));
+            case "pouzij" -> new UseCommand(player, parametr);
             case "pomoc" -> new HelpCommand();
             case "konec" -> new EndCommand();
             default -> {

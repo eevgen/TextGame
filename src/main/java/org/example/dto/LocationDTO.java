@@ -1,6 +1,5 @@
 package org.example.dto;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,8 +16,5 @@ public class LocationDTO {
     private Map<String, String> exits;
     private List<String> items;
     private List<String> characters;
-    private boolean locked;
-    @SerializedName("unlock_items")
-    private List<String> unlockItems;
 
 }

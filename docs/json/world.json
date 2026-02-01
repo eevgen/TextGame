@@ -7,8 +7,7 @@
       "jih": "dum_babicky"
     },
     "items": ["mapa", "kniha"],
-    "characters": [],
-    "locked": false
+    "characters": []
   },
   {
     "id": "dum_babicky",
@@ -19,9 +18,7 @@
       "jih": "vesnice"
     },
     "items": [],
-    "characters": ["babicka"],
-    "locked": true,
-    "unlock_items": ["mapa"]
+    "characters": ["babicka"]
   },
   {
     "id": "vesnice",

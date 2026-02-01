@@ -19,9 +19,9 @@ public class LocationService {
 
     private static  final String PATH_TO_WORLD_FILE_JSON = "docs/json/world.json";
 
-    private Map<String, Location> allLocations = new HashMap<>();
+    private Map<String, Location> vsechnyLokace = new HashMap<>();
 
-    public void createWorld(ItemService itemService) {
+    public void vytvorSvet(ItemService itemService) {
         Reader reader = null;
         try {
 
@@ -33,33 +33,27 @@ public class LocationService {
             for (LocationDTO dto : locationDTOS) {
                 Location location = new Location(dto.getName(), dto.getDescription());
 
-                // set locked status and unlock items
-                location.setLocked(dto.isLocked());
-                if (dto.getUnlockItems() != null) {
-                    location.setUnlockItems(dto.getUnlockItems());
-                }
-
                 // add items
                 for (String itemId : dto.getItems()) {
                     Item item = itemService.createItem(itemId);
-                    location.addItem(item);
+                    location.pridatPredmet(item);
                 }
 
                 // add characters
                 for (String charName : dto.getCharacters()) {
-                    NPC character = createCharacter(charName);
-                    location.addCharacter(character);
+                    NPC postava = vytvorPostavu(charName);
+                    location.pridatPostavu(postava);
                 }
 
-                allLocations.put(dto.getId(), location);
+                vsechnyLokace.put(dto.getId(), location);
             }
 
             for (LocationDTO dto : locationDTOS) {
-                Location location = allLocations.get(dto.getId());
+                Location location = vsechnyLokace.get(dto.getId());
                 dto.getExits().forEach((key, value) -> {
                     connectLocation(location,
                             Direction.fromString(key),
-                            allLocations.get(value));
+                            vsechnyLokace.get(value));
                 });
             }
 
@@ -76,8 +70,8 @@ public class LocationService {
         }
     }
 
-    private NPC createCharacter(String name) {
-        return switch (name) {
+    private NPC vytvorPostavu(String nazev) {
+        return switch (nazev) {
             case "babicka" -> new NPC("Babička", null, null,
                     "Buď opatrný, Jacku! Cesta je nebezpečná.", null);
             case "iris" -> new NPC("Iris", null, null,
@@ -85,23 +79,35 @@ public class LocationService {
             case "rose" -> new NPC("Rose", null, null,
                     "Vezmi si tento meč, budeš ho potřebovat.",
                     null);
-            default -> new NPC(name, null, null, "...", null);
+            case "starosta" -> new NPC("Starosta", null, null,
+                    "Vítej v naší vesnici, Jacku. Jsi připraven na dobrodružství?", null);
+            case "selmy" -> new NPC("Šelmy", null, null,
+                    "Grrr... Vrčení šelem...", null);
+            case "goblin" -> new NPC("Goblin", null, null,
+                    "Hihihi! Co tady děláš, lidský? Máš klíč pro nás?", null);
+            case "vila" -> new NPC("Víla", null, null,
+                    "Vítej v Království víl. Královna na tebe čeká v trůnním sále.", null);
+            case "kralovna" -> new NPC("Královna", null, null,
+                    "Vítej, Jacku. Děkuji ti, že jsi přišel. Potřebuji tvou pomoc.", null);
+            case "aria" -> new NPC("Aria", null, null,
+                    "Jsem Aria, asistentka královny. Je mi potěšením tě poznat.", null);
+            default -> new NPC(nazev, null, null, "...", null);
         };
     }
 
     public Location getStartLocation() {
-        return allLocations.get("puda");
+        return vsechnyLokace.get("puda");
     }
 
     public Location findLocation(String id) {
-        return allLocations.get(id);
+        return vsechnyLokace.get(id);
     }
 
     public void connectLocation(Location location1, Direction direction, Location location2) {
-        location1.addExit(direction, location2);
+        location1.pridatVychod(direction, location2);
     }
 
     public Map<String, Location> getAllLocations() {
-        return allLocations;
+        return vsechnyLokace;
     }
 }

@@ -10,16 +10,16 @@ public enum Direction {
     ZAPAD("Západ", "zapad");
 
     private String title;
-    private String id;
+    private String jsonKey;
 
     Direction(String title, String jsonKey) {
         this.title = title;
-        this.id = jsonKey;
+        this.jsonKey = jsonKey;
     }
 
     public static Direction fromString(String text) {
         for (Direction direction : Direction.values()) {
-            if (direction.id.equalsIgnoreCase(text) ||
+            if (direction.jsonKey.equalsIgnoreCase(text) ||
                 direction.title.equalsIgnoreCase(text)) {
                 return direction;
             }

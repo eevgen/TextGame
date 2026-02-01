@@ -7,11 +7,11 @@ public class EndCommand implements Command {
 
     @Override
     public void execute() {
-        // TODO: Implementation
+
     }
 
     @Override
     public void undo() {
-        // TODO: Implementation
+
     }
 }
