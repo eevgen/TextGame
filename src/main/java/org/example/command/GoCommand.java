@@ -18,9 +18,6 @@ public class GoCommand implements Command {
     public void execute() {
 
         Location currentLocation = player.getCurrentLocation();
-        System.out.println("You are now in " + currentLocation.getName() + ".");
-        GameController.displayLocation(currentLocation);
-
         Location nextLocation = currentLocation.getExit(direction);
 
         if(nextLocation == null) {

@@ -3,28 +3,28 @@
     "id": "mapa",
     "name": "Mapa",
     "description": "Stará mapa do Království víl",
-    "prenositelny": true,
-    "pouzitelny": true
+    "portable": true,
+    "usable": true
   },
   {
     "id": "kniha",
     "name": "Kniha",
     "description": "Stará kniha v kůži",
-    "prenositelny": true,
-    "pouzitelny": false
+    "portable": true,
+    "usable": false
   },
   {
     "id": "mec",
     "name": "Meč",
     "description": "Ostrý meč na obranu proti šelmám",
-    "prenositelny": true,
-    "pouzitelny": true
+    "portable": true,
+    "usable": true
   },
   {
     "id": "klic",
     "name": "Klíč",
     "description": "Zlatý klíč k bráně Království víl",
-    "prenositelny": true,
-    "pouzitelny": true
+    "portable": true,
+    "usable": true
   }
 ]

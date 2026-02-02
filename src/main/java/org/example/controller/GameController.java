@@ -29,9 +29,17 @@ public class GameController {
 
         displayLocation(player.getCurrentLocation());
 
+        boolean lastCommandWasGo = false;
+
         while (gameRunning) {
+            if (lastCommandWasGo) {
+                displayLocation(player.getCurrentLocation());
+            }
+
             System.out.print("> ");
             String userInput = scanner.nextLine();
+
+            lastCommandWasGo = userInput.startsWith("jdi ");
 
             if (userInput.equals("konec")) {
                 gameRunning = false;
@@ -44,8 +52,10 @@ public class GameController {
     }
 
     public void processCommand(String input) {
+
         Command command = parser.parse(input);
         if (command != null) {
+
             command.execute();
 
             // control game win condition
