@@ -1,5 +1,6 @@
 package org.example.command;
 
+import org.example.controller.GameController;
 import org.example.model.Item;
 import org.example.model.NPC;
 import org.example.model.Player;
@@ -18,7 +19,7 @@ public class ExamineCommand implements Command {
     public void execute() {
         // if no target is specified, describe the current location
         if (target == null || target.isEmpty()) {
-            System.out.println("\n" + player.getCurrentLocation().getDescription());
+            GameController.displayLocation(player.getCurrentLocation());
             return;
         }
 
