@@ -18,25 +18,25 @@ public class CommandFactory {
         this.player = player;
     }
 
-    public Command createCommand(String name, String parameter) {
+    public Command vytvorPrikaz(String nazev, String parametr) {
 
-        if(name == null
+        if(nazev == null
         ) {
             return null;
         }
 
-        return switch (name) {
-            case "jdi" -> new GoCommand(player, parameter);
-            case "vezmi" -> new PickupCommand(player, itemService.findItem(parameter));
-            case "poloz" -> new DropCommand(player, itemService.findItem(parameter));
+        return switch (nazev) {
+            case "jdi" -> new GoCommand(player, parametr);
+            case "vezmi" -> new PickupCommand(player, parametr);
+            case "poloz" -> new DropCommand(player, parametr);
             case "batoh" -> new InventoryCommand(player);
-            case "prozkoumej" -> new ExamineCommand(player, parameter);
-            case "mluv" -> new TalkCommand(player, parameter);
-            case "pouzij" -> new UseCommand(player, itemService.findItem(parameter));
+            case "prozkoumej" -> new ExamineCommand(player, parametr);
+            case "mluv" -> new TalkCommand(player, parametr);
+            case "pouzij" -> new UseCommand(player, parametr);
             case "pomoc" -> new HelpCommand();
             case "konec" -> new EndCommand();
             default -> {
-                System.out.println("Neznámý příkaz: " + name);
+                System.out.println("Neznámý příkaz: " + nazev);
                 yield null;
             }
         };

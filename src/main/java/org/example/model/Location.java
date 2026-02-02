@@ -63,6 +63,15 @@ public class Location {
         postavy.add(postava);
     }
 
+    public NPC findPostava(String jmeno) {
+        for (NPC npc : postavy) {
+            if (npc.getJmeno().equalsIgnoreCase(jmeno)) {
+                return npc;
+            }
+        }
+        return null;
+    }
+
     public boolean jeZamceno() {
         return zamceno;
     }

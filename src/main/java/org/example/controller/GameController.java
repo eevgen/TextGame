@@ -11,61 +11,98 @@ import java.util.Scanner;
 
 public class GameController {
 
-    private Player player;
+    private Player hrac;
     private CommandParser parser;
-    private boolean gameRunning;
+    private boolean hraProbiha;
 
     private final static Scanner scanner = new Scanner(System.in);
 
     public GameController(CommandParser parser) {
         this.parser = parser;
-        this.gameRunning = true;
-        player = parser.getPlayer();
+        this.hraProbiha = true;
+        hrac = parser.getPlayer();
     }
 
     public void start() {
         System.out.println("=== Tajemství Království víl ===");
         System.out.println("Napiš 'pomoc' pro seznam příkazů.\n");
 
-        displayLocation(player.getCurrentLocation());
+        zobrazitLokaci(hrac.getAktualniLokace());
 
-        while (gameRunning) {
+        while (hraProbiha) {
             System.out.print("> ");
             String userInput = scanner.nextLine();
 
             if (userInput.equals("konec")) {
-                gameRunning = false;
+                hraProbiha = false;
                 System.out.println("Hra ukončena. Nashledanou!");
                 break;
             }
 
-            processCommand(userInput);
+            zpracovatPrikaz(userInput);
         }
     }
 
-    public void processCommand(String input) {
-        Command command = parser.parse(input);
+    public void zpracovatPrikaz(String vstup) {
+        Command command = parser.parsovat(vstup);
         if (command != null) {
             command.execute();
+
+            // control game win condition
+            if (zkontrolovatVyhru()) {
+                System.out.println("\n╔══════════════════════════════════╗");
+                System.out.println("║  GRATULUJEME! VYHRÁL JSI HRU!    ║");
+                System.out.println("╚══════════════════════════════════╝");
+                System.out.println("\nDostal ses do Trůnního sálu a splnil jsi své přání!");
+                System.out.println("Jack může konečně vrátit své rodiče zpět.\n");
+                hraProbiha = false;
+            }
         }
     }
 
-    public static void displayLocation(Location location) {
+    public static void zobrazitLokaci(Location lokace) {
         System.out.println("\n══════════════════════════════════");
-        System.out.println("Lokace: " + location.getName());
+        System.out.println("Lokace: " + lokace.getNazev());
         System.out.println("──────────────────────────────────");
-        System.out.println(location.getDescription());
-        location.showExits();
-        System.out.println("──────────────────────────────────");
-        location.showItems();
+        System.out.println(lokace.getPopis());
+
+        // show items in location
+        if (!lokace.getPredmety().isEmpty()) {
+            System.out.print("Předměty: ");
+            for (int i = 0; i < lokace.getPredmety().size(); i++) {
+                System.out.print(lokace.getPredmety().get(i).getNazev());
+                if (i < lokace.getPredmety().size() - 1) {
+                    System.out.print(", ");
+                }
+            }
+            System.out.println();
+        }
+
+        // show npcs in location
+        if (!lokace.getPostavy().isEmpty()) {
+            System.out.print("Postavy: ");
+            for (int i = 0; i < lokace.getPostavy().size(); i++) {
+                System.out.print(lokace.getPostavy().get(i).getJmeno());
+                if (i < lokace.getPostavy().size() - 1) {
+                    System.out.print(", ");
+                }
+            }
+            System.out.println();
+        }
+
+        lokace.showExits();
         System.out.println("══════════════════════════════════\n");
     }
 
-    public boolean checkWin() {
+    public boolean zkontrolovatVyhru() {
+        // player wins if they reach the throne room location
+        if (hrac.getAktualniLokace().getNazev().equals("Trůnní sál")) {
+            return true;
+        }
         return false;
     }
 
-    public void endGame() {
+    public void ukoncitHru() {
 
     }
 }
