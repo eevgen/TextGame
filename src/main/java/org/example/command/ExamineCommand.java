@@ -17,29 +17,29 @@ public class ExamineCommand implements Command {
     @Override
     public void execute() {
         // if no target is specified, describe the current location
-        if (cil == null || cil.isEmpty()) {
-            System.out.println("\n" + hrac.getAktualniLokace().getPopis());
+        if (target == null || target.isEmpty()) {
+            System.out.println("\n" + player.getCurrentLocation().getDescription());
             return;
         }
 
         // find item in current location
-        Item predmetVLokaci = hrac.getAktualniLokace().findItem(cil);
-        if (predmetVLokaci != null) {
-            System.out.println("\n" + predmetVLokaci.getNazev() + ": " + predmetVLokaci.getPopis());
+        Item itemInLocation = player.getCurrentLocation().findItem(target);
+        if (itemInLocation != null) {
+            System.out.println("\n" + itemInLocation.getName() + ": " + itemInLocation.getDescription());
             return;
         }
 
         // find item in backpack
-        Item predmetVBatohu = hrac.getBatoh().findItem(cil);
-        if (predmetVBatohu != null) {
-            System.out.println("\n" + predmetVBatohu.getNazev() + ": " + predmetVBatohu.getPopis());
+        Item itemInBackpack = player.getBackpack().findItem(target);
+        if (itemInBackpack != null) {
+            System.out.println("\n" + itemInBackpack.getName() + ": " + itemInBackpack.getDescription());
             return;
         }
 
         // find NPC in current location
-        NPC postava = hrac.getAktualniLokace().findPostava(cil);
-        if (postava != null) {
-            System.out.println("\n" + postava.getJmeno() + " - " + postava.getDialog());
+        NPC npc = player.getCurrentLocation().findCharacter(target);
+        if (npc != null) {
+            System.out.println("\n" + npc.getName() + " - " + npc.getDialog());
             return;
         }
 

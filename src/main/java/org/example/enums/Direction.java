@@ -4,10 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum Direction {
-    SEVER("Sever", "sever"),
-    VYCHOD("Východ", "vychod"),
-    JIH("Jih", "jih"),
-    ZAPAD("Západ", "zapad");
+    NORTH("Sever", "sever"),
+    EAST("Východ", "vychod"),
+    SOUTH("Jih", "jih"),
+    WEST("Západ", "zapad");
 
     private String title;
     private String id;

@@ -5,47 +5,47 @@ import org.example.model.Player;
 
 public class PickupCommand implements Command {
 
-    private Player hrac;
-    private String predmetId;
+    private Player player;
+    private String itemId;
 
-    public PickupCommand(Player hrac, String predmetId) {
-        this.hrac = hrac;
-        this.predmetId = predmetId;
+    public PickupCommand(Player player, String itemId) {
+        this.player = player;
+        this.itemId = itemId;
     }
 
     @Override
     public void execute() {
-        // chek if predmetId is provided
-        if (predmetId == null || predmetId.isEmpty()) {
+        // check if itemId is provided
+        if (itemId == null || itemId.isEmpty()) {
             System.out.println("Co chceš sebrat? Použij: vezmi [předmět]");
             return;
         }
 
-        // find predmet in current location
-        Item predmet = hrac.getAktualniLokace().findItem(predmetId);
+        // find item in current location
+        Item item = player.getCurrentLocation().findItem(itemId);
 
-        if (predmet == null) {
-            System.out.println("Předmět '" + predmetId + "' se zde nenachází.");
+        if (item == null) {
+            System.out.println("Předmět '" + itemId + "' se zde nenachází.");
             return;
         }
 
-        // check if item is transferable
-        if (!predmet.isPrenositelny()) {
-            System.out.println("Předmět '" + predmet.getNazev() + "' nelze sebrat.");
+        // check if item is portable
+        if (!item.isPortable()) {
+            System.out.println("Předmět '" + item.getName() + "' nelze sebrat.");
             return;
         }
 
         // check if backpack is full
-        if (hrac.getBatoh().jePlny()) {
+        if (player.getBackpack().isFull()) {
             System.out.println("Batoh je plný! Nejprve něco polož.");
             return;
         }
 
         // add item to backpack and remove from location
-        hrac.getBatoh().pridatPredmet(predmet);
-        hrac.getAktualniLokace().odebratPredmet(predmet);
+        player.getBackpack().addItem(item);
+        player.getCurrentLocation().removeItem(item);
 
-        System.out.println("Sebral jsi: " + predmet.getNazev());
+        System.out.println("Sebral jsi: " + item.getName());
     }
 
     @Override

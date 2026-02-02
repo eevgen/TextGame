@@ -19,9 +19,9 @@ public class LocationService {
 
     private static  final String PATH_TO_WORLD_FILE_JSON = "docs/json/world.json";
 
-    private Map<String, Location> vsechnyLokace = new HashMap<>();
+    private Map<String, Location> allLocations = new HashMap<>();
 
-    public void vytvorSvet(ItemService itemService) {
+    public void createWorld(ItemService itemService) {
         Reader reader = null;
         try {
 
@@ -36,24 +36,24 @@ public class LocationService {
                 // add items
                 for (String itemId : dto.getItems()) {
                     Item item = itemService.createItem(itemId);
-                    location.pridatPredmet(item);
+                    location.addItem(item);
                 }
 
                 // add characters
                 for (String charName : dto.getCharacters()) {
-                    NPC postava = vytvorPostavu(charName);
-                    location.pridatPostavu(postava);
+                    NPC character = createCharacter(charName);
+                    location.addCharacter(character);
                 }
 
-                vsechnyLokace.put(dto.getId(), location);
+                allLocations.put(dto.getId(), location);
             }
 
             for (LocationDTO dto : locationDTOS) {
-                Location location = vsechnyLokace.get(dto.getId());
+                Location location = allLocations.get(dto.getId());
                 dto.getExits().forEach((key, value) -> {
                     connectLocation(location,
                             Direction.fromString(key),
-                            vsechnyLokace.get(value));
+                            allLocations.get(value));
                 });
             }
 
@@ -70,8 +70,8 @@ public class LocationService {
         }
     }
 
-    private NPC vytvorPostavu(String nazev) {
-        return switch (nazev) {
+    private NPC createCharacter(String name) {
+        return switch (name) {
             case "babicka" -> new NPC("Babička", null, null,
                     "Buď opatrný, Jacku! Cesta je nebezpečná.", null);
             case "iris" -> new NPC("Iris", null, null,
@@ -91,23 +91,23 @@ public class LocationService {
                     "Vítej, Jacku. Děkuji ti, že jsi přišel. Potřebuji tvou pomoc.", null);
             case "aria" -> new NPC("Aria", null, null,
                     "Jsem Aria, asistentka královny. Je mi potěšením tě poznat.", null);
-            default -> new NPC(nazev, null, null, "...", null);
+            default -> new NPC(name, null, null, "...", null);
         };
     }
 
     public Location getStartLocation() {
-        return vsechnyLokace.get("puda");
+        return allLocations.get("puda");
     }
 
     public Location findLocation(String id) {
-        return vsechnyLokace.get(id);
+        return allLocations.get(id);
     }
 
     public void connectLocation(Location location1, Direction direction, Location location2) {
-        location1.pridatVychod(direction, location2);
+        location1.addExit(direction, location2);
     }
 
     public Map<String, Location> getAllLocations() {
-        return vsechnyLokace;
+        return allLocations;
     }
 }

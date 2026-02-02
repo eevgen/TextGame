@@ -5,58 +5,58 @@ import org.example.model.Player;
 
 public class UseCommand implements Command {
 
-    private Player hrac;
-    private String predmetId;
+    private Player player;
+    private String itemId;
 
-    public UseCommand(Player hrac, String predmetId) {
-        this.hrac = hrac;
-        this.predmetId = predmetId;
+    public UseCommand(Player player, String itemId) {
+        this.player = player;
+        this.itemId = itemId;
     }
 
     @Override
     public void execute() {
-        // check if predmetId is provided
-        if (predmetId == null || predmetId.isEmpty()) {
+        // check if itemId is provided
+        if (itemId == null || itemId.isEmpty()) {
             System.out.println("Co chceš použít? Použij: pouzij [předmět]");
             return;
         }
 
         // find item in backpack
-        Item predmet = hrac.getBatoh().findItem(predmetId);
+        Item item = player.getBackpack().findItem(itemId);
 
-        if (predmet == null) {
-            System.out.println("Předmět '" + predmetId + "' nemáš v batohu.");
+        if (item == null) {
+            System.out.println("Předmět '" + itemId + "' nemáš v batohu.");
             return;
         }
 
         // check if item is usable
-        if (!predmet.isPouzitelny()) {
-            System.out.println("Předmět '" + predmet.getNazev() + "' nelze použít.");
+        if (!item.isUsable()) {
+            System.out.println("Předmět '" + item.getName() + "' nelze použít.");
             return;
         }
 
         // use item based on its id
-        switch (predmetId.toLowerCase()) {
+        switch (itemId.toLowerCase()) {
             case "klic":
-                useKlic();
+                useKey();
                 break;
             case "mec":
-                useMec();
+                useSword();
                 break;
             case "mapa":
-                useMapa();
+                useMap();
                 break;
             default:
-                System.out.println("Použil jsi " + predmet.getNazev() + ", ale nic se nestalo.");
+                System.out.println("Použil jsi " + item.getName() + ", ale nic se nestalo.");
                 break;
         }
     }
 
     //use key to unlock golden gate
-    private void useKlic() {
-        String lokaceId = hrac.getAktualniLokace().getNazev();
-        if (lokaceId.equals("Zlatá brána")) {
-            hrac.getAktualniLokace().odemknout();
+    private void useKey() {
+        String locationName = player.getCurrentLocation().getName();
+        if (locationName.equals("Zlatá brána")) {
+            player.getCurrentLocation().unlock();
             System.out.println("Použil jsi zlatý klíč. Brána se s tichým zaskřípěním otevřela!");
         } else {
             System.out.println("Zde není co odemknout.");
@@ -64,9 +64,9 @@ public class UseCommand implements Command {
     }
 
     // use sword to scare away beasts
-    private void useMec() {
-        String lokaceId = hrac.getAktualniLokace().getNazev();
-        if (lokaceId.equals("Doupě šelem")) {
+    private void useSword() {
+        String locationName = player.getCurrentLocation().getName();
+        if (locationName.equals("Doupě šelem")) {
             System.out.println("Vytrhl jsi meč a zahnal šelmy! Cesta je volná.");
         } else {
             System.out.println("Šelmy zde nejsou, meč teď nepotřebuješ.");
@@ -74,7 +74,7 @@ public class UseCommand implements Command {
     }
 
     // use map to show the path
-    private void useMapa() {
+    private void useMap() {
         System.out.println("\nProhlížíš mapu:");
         System.out.println("Cesta vede: Půda → Dům → Vesnice → Les → Tábor goblinů → Zlatá brána → Komnata harfy → Trůnní sál");
         System.out.println("Tip: Potřebuješ meč a klíč pro dokončení cesty.\n");

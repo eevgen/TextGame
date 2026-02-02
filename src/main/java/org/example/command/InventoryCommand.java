@@ -15,12 +15,12 @@ public class InventoryCommand implements Command {
     public void execute() {
         System.out.println("\n═══════ BATOH ═══════");
 
-        if (hrac.getBatoh().getPredmety().isEmpty()) {
+        if (player.getBackpack().getItems().isEmpty()) {
             System.out.println("Batoh je prázdný.");
         } else {
             System.out.println("Předměty v batohu:");
-            for (Item predmet : hrac.getBatoh().getPredmety()) {
-                System.out.println("  - " + predmet.getNazev() + " - " + predmet.getPopis());
+            for (Item item : player.getBackpack().getItems()) {
+                System.out.println("  - " + item.getName() + " - " + item.getDescription());
             }
         }
 

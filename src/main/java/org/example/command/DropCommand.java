@@ -5,35 +5,35 @@ import org.example.model.Player;
 
 public class DropCommand implements Command {
 
-    private Player hrac;
-    private String predmetId;
+    private Player player;
+    private String itemId;
 
-    public DropCommand(Player hrac, String predmetId) {
-        this.hrac = hrac;
-        this.predmetId = predmetId;
+    public DropCommand(Player player, String itemId) {
+        this.player = player;
+        this.itemId = itemId;
     }
 
     @Override
     public void execute() {
-        // check if predmetId is provided
-        if (predmetId == null || predmetId.isEmpty()) {
+        // check if itemId is provided
+        if (itemId == null || itemId.isEmpty()) {
             System.out.println("Co chceš položit? Použij: poloz [předmět]");
             return;
         }
 
-        // find predmet in backpack
-        Item predmet = hrac.getBatoh().findItem(predmetId);
+        // find item in backpack
+        Item item = player.getBackpack().findItem(itemId);
 
-        if (predmet == null) {
-            System.out.println("Předmět '" + predmetId + "' nemáš v batohu.");
+        if (item == null) {
+            System.out.println("Předmět '" + itemId + "' nemáš v batohu.");
             return;
         }
 
         // remove item from backpack and add to current location
-        hrac.getBatoh().odebratPredmet(predmet);
-        hrac.getAktualniLokace().pridatPredmet(predmet);
+        player.getBackpack().removeItem(item);
+        player.getCurrentLocation().addItem(item);
 
-        System.out.println("Položil jsi: " + predmet.getNazev());
+        System.out.println("Položil jsi: " + item.getName());
     }
 
     @Override

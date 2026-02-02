@@ -17,28 +17,28 @@ public class TalkCommand implements Command {
     @Override
     public void execute() {
         // check if character to talk to is specified
-        if (postava == null || postava.isEmpty()) {
+        if (character == null || character.isEmpty()) {
             System.out.println("S kým chceš mluvit? Použij: mluv [postava]");
             return;
         }
 
         // find NPC in current location
-        NPC npc = hrac.getAktualniLokace().findPostava(postava);
+        NPC npc = player.getCurrentLocation().findCharacter(character);
 
         if (npc == null) {
-            System.out.println("Postava '" + postava + "' se zde nenachází.");
+            System.out.println("Postava '" + character + "' se zde nenachází.");
             return;
         }
 
         // display dialog
-        String dialog = npc.promluvitSi();
-        System.out.println("\n" + npc.getJmeno() + ": \"" + dialog + "\"\n");
+        String dialog = npc.speak();
+        System.out.println("\n" + npc.getName() + ": \"" + dialog + "\"\n");
 
         // give reward if available and not already given
-        if (npc.datOdmenu() != null && !npc.bylPromluveno()) {
-            Item odmena = npc.datOdmenu();
-            if (hrac.getBatoh().pridatPredmet(odmena)) {
-                System.out.println(npc.getJmeno() + " ti dal: " + odmena.getNazev());
+        if (npc.giveReward() != null && !npc.hasSpoken()) {
+            Item reward = npc.giveReward();
+            if (player.getBackpack().addItem(reward)) {
+                System.out.println(npc.getName() + " ti dal: " + reward.getName());
             } else {
                 System.out.println("Batoh je plný, nemůžeš přijmout odměnu!");
             }

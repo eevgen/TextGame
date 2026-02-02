@@ -11,67 +11,67 @@ import java.util.Scanner;
 
 public class GameController {
 
-    private Player hrac;
+    private Player player;
     private CommandParser parser;
-    private boolean hraProbiha;
+    private boolean gameRunning;
 
     private final static Scanner scanner = new Scanner(System.in);
 
     public GameController(CommandParser parser) {
         this.parser = parser;
-        this.hraProbiha = true;
-        hrac = parser.getPlayer();
+        this.gameRunning = true;
+        player = parser.getPlayer();
     }
 
     public void start() {
         System.out.println("=== Tajemství Království víl ===");
         System.out.println("Napiš 'pomoc' pro seznam příkazů.\n");
 
-        zobrazitLokaci(hrac.getAktualniLokace());
+        displayLocation(player.getCurrentLocation());
 
-        while (hraProbiha) {
+        while (gameRunning) {
             System.out.print("> ");
             String userInput = scanner.nextLine();
 
             if (userInput.equals("konec")) {
-                hraProbiha = false;
+                gameRunning = false;
                 System.out.println("Hra ukončena. Nashledanou!");
                 break;
             }
 
-            zpracovatPrikaz(userInput);
+            processCommand(userInput);
         }
     }
 
-    public void zpracovatPrikaz(String vstup) {
-        Command command = parser.parsovat(vstup);
+    public void processCommand(String input) {
+        Command command = parser.parse(input);
         if (command != null) {
             command.execute();
 
             // control game win condition
-            if (zkontrolovatVyhru()) {
+            if (checkWinCondition()) {
                 System.out.println("\n╔══════════════════════════════════╗");
                 System.out.println("║  GRATULUJEME! VYHRÁL JSI HRU!    ║");
                 System.out.println("╚══════════════════════════════════╝");
                 System.out.println("\nDostal ses do Trůnního sálu a splnil jsi své přání!");
                 System.out.println("Jack může konečně vrátit své rodiče zpět.\n");
-                hraProbiha = false;
+                gameRunning = false;
             }
         }
     }
 
-    public static void zobrazitLokaci(Location lokace) {
+    public static void displayLocation(Location location) {
         System.out.println("\n══════════════════════════════════");
-        System.out.println("Lokace: " + lokace.getNazev());
+        System.out.println("Lokace: " + location.getName());
         System.out.println("──────────────────────────────────");
-        System.out.println(lokace.getPopis());
+        System.out.println(location.getDescription());
 
         // show items in location
-        if (!lokace.getPredmety().isEmpty()) {
+        if (!location.getItems().isEmpty()) {
             System.out.print("Předměty: ");
-            for (int i = 0; i < lokace.getPredmety().size(); i++) {
-                System.out.print(lokace.getPredmety().get(i).getNazev());
-                if (i < lokace.getPredmety().size() - 1) {
+            for (int i = 0; i < location.getItems().size(); i++) {
+                System.out.print(location.getItems().get(i).getName());
+                if (i < location.getItems().size() - 1) {
                     System.out.print(", ");
                 }
             }
@@ -79,30 +79,30 @@ public class GameController {
         }
 
         // show npcs in location
-        if (!lokace.getPostavy().isEmpty()) {
+        if (!location.getCharacters().isEmpty()) {
             System.out.print("Postavy: ");
-            for (int i = 0; i < lokace.getPostavy().size(); i++) {
-                System.out.print(lokace.getPostavy().get(i).getJmeno());
-                if (i < lokace.getPostavy().size() - 1) {
+            for (int i = 0; i < location.getCharacters().size(); i++) {
+                System.out.print(location.getCharacters().get(i).getName());
+                if (i < location.getCharacters().size() - 1) {
                     System.out.print(", ");
                 }
             }
             System.out.println();
         }
 
-        lokace.showExits();
+        location.showExits();
         System.out.println("══════════════════════════════════\n");
     }
 
-    public boolean zkontrolovatVyhru() {
+    public boolean checkWinCondition() {
         // player wins if they reach the throne room location
-        if (hrac.getAktualniLokace().getNazev().equals("Trůnní sál")) {
+        if (player.getCurrentLocation().getName().equals("Trůnní sál")) {
             return true;
         }
         return false;
     }
 
-    public void ukoncitHru() {
+    public void endGame() {
 
     }
 }
