@@ -21,12 +21,12 @@ public class GoCommand implements Command {
         Location nextLocation = currentLocation.getExit(direction);
 
         if(nextLocation == null) {
-            System.out.println("There is no exit in that direction.");
+            System.out.println("Tímto směrem se nelze jít.");
             return;
         }
 
         player.setCurrentLocation(nextLocation);
-        System.out.println("You moved to " + nextLocation.getName() + ".");
+        GameController.displayLocation(nextLocation);
 
     }
 

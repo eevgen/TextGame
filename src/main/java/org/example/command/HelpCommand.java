@@ -16,6 +16,7 @@ public class HelpCommand implements Command {
         System.out.println("prozkoumej [cíl]  - prozkoumat místnost/předmět/postavu");
         System.out.println("mluv [postava]    - mluvit s postavou");
         System.out.println("pouzij [předmět]  - použít předmět");
+        System.out.println("napoveda          - dodatečná rada pro aktuální situaci");
         System.out.println("pomoc             - zobrazit tuto nápovědu");
         System.out.println("konec             - ukončit hru");
         System.out.println("═══════════════════════════════\n");

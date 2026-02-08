@@ -34,6 +34,7 @@ public class CommandFactory {
             case "mluv" -> new TalkCommand(player, parameter);
             case "pouzij" -> new UseCommand(player, parameter);
             case "pomoc" -> new HelpCommand();
+            case "napoveda" -> new HintCommand(player);
             case "konec" -> new EndCommand();
             default -> {
                 System.out.println("Neznámý příkaz: " + name);

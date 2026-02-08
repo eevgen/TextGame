@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.controller.CommandController;
 import org.example.controller.GameController;
 import org.example.model.Backpack;
 import org.example.model.Location;
