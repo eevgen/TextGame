@@ -57,6 +57,12 @@ public class LocationService {
                 });
             }
 
+            // Lock the golden gate - can only be passed with key
+            Location goldenGate = allLocations.get("zlata_brana");
+            if (goldenGate != null) {
+                goldenGate.lock();
+            }
+
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } finally {

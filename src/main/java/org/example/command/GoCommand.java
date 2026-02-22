@@ -25,6 +25,11 @@ public class GoCommand implements Command {
             return;
         }
 
+        if(nextLocation.isLocked()) {
+            System.out.println("Tímto směrem se nelze jít. Cesta je zamčená!");
+            return;
+        }
+
         player.setCurrentLocation(nextLocation);
         GameController.displayLocation(nextLocation);
 

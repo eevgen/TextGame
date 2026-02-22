@@ -1,6 +1,7 @@
 package org.example.command;
 
 import org.example.model.Item;
+import org.example.model.Location;
 import org.example.model.Player;
 
 public class UseCommand implements Command {
@@ -54,9 +55,9 @@ public class UseCommand implements Command {
 
     //use key to unlock golden gate
     private void useKey() {
-        String locationName = player.getCurrentLocation().getName();
-        if (locationName.equals("Zlatá brána")) {
-            player.getCurrentLocation().unlock();
+        Location nextLocation = player.getCurrentLocation().getExit("jih");
+        if (nextLocation != null && nextLocation.isLocked()) {
+            nextLocation.unlock();
             System.out.println("Použil jsi zlatý klíč. Brána se s tichým zaskřípěním otevřela!");
         } else {
             System.out.println("Zde není co odemknout.");

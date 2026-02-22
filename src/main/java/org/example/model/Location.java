@@ -76,6 +76,10 @@ public class Location {
         return locked;
     }
 
+    public void lock() {
+        this.locked = true;
+    }
+
     public void unlock() {
         this.locked = false;
     }
