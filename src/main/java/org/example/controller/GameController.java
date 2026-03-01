@@ -9,48 +9,70 @@ import org.example.service.ItemService;
 
 import java.util.Scanner;
 
+/**
+ * Main game controller - handles game loop, user input, and win condition.
+ * @author Text Game Team
+ */
 public class GameController {
 
     private Player player;
     private CommandParser parser;
     private boolean gameRunning;
 
-    private final static Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
 
+    /**
+     * Creates game controller with command parser.
+     * @param parser the command parser
+     */
     public GameController(CommandParser parser) {
         this.parser = parser;
         this.gameRunning = true;
+        this.scanner = new Scanner(System.in);
         player = parser.getPlayer();
     }
 
+    /**
+     * Starts main game loop - displays location, reads input, executes commands.
+     */
     public void start() {
-        System.out.println("=== Tajemství Království víl ===");
-        System.out.println("Napiš 'pomoc' pro seznam příkazů.\n");
+        try {
+            System.out.println("=== Tajemství Království víl ===");
+            System.out.println("Napiš 'pomoc' pro seznam příkazů.\n");
 
-        displayLocation(player.getCurrentLocation());
+            displayLocation(player.getCurrentLocation());
 
-        boolean lastCommandWasGo = false;
+            boolean lastCommandWasGo = false;
 
-        while (gameRunning) {
-            if (lastCommandWasGo) {
-                displayLocation(player.getCurrentLocation());
+            while (gameRunning) {
+                if (lastCommandWasGo) {
+                    displayLocation(player.getCurrentLocation());
+                }
+
+                System.out.print("> ");
+                String userInput = scanner.nextLine();
+
+                lastCommandWasGo = userInput.startsWith("jdi ");
+
+                if (userInput.equals("konec")) {
+                    gameRunning = false;
+                    System.out.println("Hra ukončena. Nashledanou!");
+                    break;
+                }
+
+                processCommand(userInput);
             }
-
-            System.out.print("> ");
-            String userInput = scanner.nextLine();
-
-            lastCommandWasGo = userInput.startsWith("jdi ");
-
-            if (userInput.equals("konec")) {
-                gameRunning = false;
-                System.out.println("Hra ukončena. Nashledanou!");
-                break;
+        } finally {
+            if (scanner != null) {
+                scanner.close();
             }
-
-            processCommand(userInput);
         }
     }
 
+    /**
+     * Parses and executes user input command.
+     * @param input user input string
+     */
     public void processCommand(String input) {
 
         Command command = parser.parse(input);
@@ -58,7 +80,6 @@ public class GameController {
 
             command.execute();
 
-            // control game win condition
             if (checkWinCondition()) {
                 System.out.println("\n╔══════════════════════════════════╗");
                 System.out.println("║  GRATULUJEME! VYHRÁL JSI HRU!    ║");
@@ -70,6 +91,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Displays location information to player.
+     * Shows name, description, items, NPCs, and available exits.
+     * @param location the location to display
+     */
     public static void displayLocation(Location location) {
         System.out.println("\n══════════════════════════════════");
         System.out.println("Lokace: " + location.getName());
@@ -104,14 +130,21 @@ public class GameController {
         System.out.println("══════════════════════════════════\n");
     }
 
+    /**
+     * Checks if player has won the game.
+     * Player wins by reaching Throne Room.
+     * @return true if player reached Throne Room
+     */
     public boolean checkWinCondition() {
-        // player wins if they reach the throne room location
         if (player.getCurrentLocation().getName().equals("Trůnní sál")) {
             return true;
         }
         return false;
     }
 
+    /**
+     * Ends the game (not implemented yet).
+     */
     public void endGame() {
 
     }

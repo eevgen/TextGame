@@ -4,26 +4,38 @@ import org.example.model.Item;
 import org.example.model.NPC;
 import org.example.model.Player;
 
+/**
+ * Talks to NPC and receives dialog. May receive reward item.
+ * Usage: mluv [npc] (e.g., mluv babicka, mluv vila)
+ * @author Text Game Team
+ */
 public class TalkCommand implements Command {
 
     private Player player;
     private String character;
 
+    /**
+     * Creates talk command.
+     * @param player the player
+     * @param character NPC name to talk to
+     */
     public TalkCommand(Player player, String character) {
         this.player = player;
         this.character = character;
     }
 
+    /**
+     * Executes talking to NPC if exists in location.
+     * Displays dialog and gives reward if available.
+     */
     @Override
     public void execute() {
-        // check if character to talk to is specified
-        if (character == null || character.isEmpty()) {
+        if (character == null || character.trim().isEmpty()) {
             System.out.println("S kým chceš mluvit? Použij: mluv [postava]");
             return;
         }
 
-        // find NPC in current location
-        NPC npc = player.getCurrentLocation().findCharacter(character);
+        NPC npc = player.getCurrentLocation().findCharacter(character.trim());
 
         if (npc == null) {
             System.out.println("Postava '" + character + "' se zde nenachází.");
@@ -35,12 +47,14 @@ public class TalkCommand implements Command {
         System.out.println("\n" + npc.getName() + ": \"" + dialog + "\"\n");
 
         // give reward if available and not already given
-        if (npc.giveReward() != null && !npc.hasSpoken()) {
+        if (!npc.hasSpoken()) {
             Item reward = npc.giveReward();
-            if (player.getBackpack().addItem(reward)) {
-                System.out.println(npc.getName() + " ti dal: " + reward.getName());
-            } else {
-                System.out.println("Batoh je plný, nemůžeš přijmout odměnu!");
+            if (reward != null) {
+                if (player.getBackpack().addItem(reward)) {
+                    System.out.println(npc.getName() + " ti dal: " + reward.getName());
+                } else {
+                    System.out.println("Batoh je plný, nemůžeš přijmout odměnu!");
+                }
             }
         }
     }

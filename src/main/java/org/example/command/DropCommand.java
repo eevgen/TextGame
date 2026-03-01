@@ -3,33 +3,43 @@ package org.example.command;
 import org.example.model.Item;
 import org.example.model.Player;
 
+/**
+ * Drops item from backpack to current location.
+ * Usage: poloz [item] (e.g., poloz kniha, poloz mapa)
+ * @author Text Game Team
+ */
 public class DropCommand implements Command {
 
     private Player player;
     private String itemId;
 
+    /**
+     * Creates drop command.
+     * @param player the player
+     * @param itemId item id to drop
+     */
     public DropCommand(Player player, String itemId) {
         this.player = player;
         this.itemId = itemId;
     }
 
+    /**
+     * Executes dropping item from backpack to location.
+     */
     @Override
     public void execute() {
-        // check if itemId is provided
-        if (itemId == null || itemId.isEmpty()) {
+        if (itemId == null || itemId.trim().isEmpty()) {
             System.out.println("Co chceš položit? Použij: poloz [předmět]");
             return;
         }
 
-        // find item in backpack
-        Item item = player.getBackpack().findItem(itemId);
+        Item item = player.getBackpack().findItem(itemId.trim());
 
         if (item == null) {
             System.out.println("Předmět '" + itemId + "' nemáš v batohu.");
             return;
         }
 
-        // remove item from backpack and add to current location
         player.getBackpack().removeItem(item);
         player.getCurrentLocation().addItem(item);
 

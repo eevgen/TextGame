@@ -5,40 +5,52 @@ import org.example.model.Item;
 import org.example.model.NPC;
 import org.example.model.Player;
 
+/**
+ * Examines location, item, or NPC. Shows full description and details.
+ * Usage: prozkoumej [target] (e.g., prozkoumej mec, prozkoumej babicka)
+ * If no target specified, shows current location.
+ * @author Text Game Team
+ */
 public class ExamineCommand implements Command {
 
     private Player player;
     private String target;
 
+    /**
+     * Creates examine command.
+     * @param player the player
+     * @param target item, NPC, or location to examine (null = current location)
+     */
     public ExamineCommand(Player player, String target) {
         this.player = player;
         this.target = target;
     }
 
+    /**
+     * Executes examining target and displays description.
+     */
     @Override
     public void execute() {
-        // if no target is specified, describe the current location
-        if (target == null || target.isEmpty()) {
+        if (target == null || target.trim().isEmpty()) {
             GameController.displayLocation(player.getCurrentLocation());
             return;
         }
 
-        // find item in current location
-        Item itemInLocation = player.getCurrentLocation().findItem(target);
+        String trimmedTarget = target.trim();
+
+        Item itemInLocation = player.getCurrentLocation().findItem(trimmedTarget);
         if (itemInLocation != null) {
             System.out.println("\n" + itemInLocation.getName() + ": " + itemInLocation.getDescription());
             return;
         }
 
-        // find item in backpack
-        Item itemInBackpack = player.getBackpack().findItem(target);
+        Item itemInBackpack = player.getBackpack().findItem(trimmedTarget);
         if (itemInBackpack != null) {
             System.out.println("\n" + itemInBackpack.getName() + ": " + itemInBackpack.getDescription());
             return;
         }
 
-        // find NPC in current location
-        NPC npc = player.getCurrentLocation().findCharacter(target);
+        NPC npc = player.getCurrentLocation().findCharacter(trimmedTarget);
         if (npc != null) {
             System.out.println("\n" + npc.getName() + " - " + npc.getDialog());
             return;

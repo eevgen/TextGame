@@ -30,13 +30,22 @@ public class LocationService {
             reader = new FileReader(PATH_TO_WORLD_FILE_JSON);
             LocationDTO[] locationDTOS = gson.fromJson(reader, LocationDTO[].class);
 
+            if (locationDTOS == null || locationDTOS.length == 0) {
+                throw new IllegalArgumentException("Soubor world.json neobsahuje žádné lokace.");
+            }
+
             for (LocationDTO dto : locationDTOS) {
+                if (dto.getId() == null || dto.getId().isEmpty()) {
+                    throw new IllegalArgumentException("Lokace musí mít ID.");
+                }
                 Location location = new Location(dto.getName(), dto.getDescription());
 
                 // add items
                 for (String itemId : dto.getItems()) {
                     Item item = itemService.createItem(itemId);
-                    location.addItem(item);
+                    if (item != null) {
+                        location.addItem(item);
+                    }
                 }
 
                 // add characters
@@ -51,9 +60,13 @@ public class LocationService {
             for (LocationDTO dto : locationDTOS) {
                 Location location = allLocations.get(dto.getId());
                 dto.getExits().forEach((key, value) -> {
+                    Location nextLocation = allLocations.get(value);
+                    if (nextLocation == null) {
+                        throw new IllegalArgumentException("Lokace '" + value + "' odkazovaná z '" + dto.getId() + "' neexistuje.");
+                    }
                     connectLocation(location,
                             Direction.fromString(key),
-                            allLocations.get(value));
+                            nextLocation);
                 });
             }
 
@@ -64,15 +77,22 @@ public class LocationService {
             }
 
         } catch (FileNotFoundException e) {
+            System.err.println("Chyba: Nelze načíst herní svět. Soubor '" + PATH_TO_WORLD_FILE_JSON + "' neexistuje.");
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Chyba v konfiguraci hry: " + e.getMessage());
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            System.err.println("Neočekávaná chyba při načítání herního světa: " + e.getMessage());
             throw new RuntimeException(e);
         } finally {
-
-            try {
-                reader.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    System.err.println("Varování: Nepodařilo se zavřít soubor world.json");
+                }
             }
-
         }
     }
 

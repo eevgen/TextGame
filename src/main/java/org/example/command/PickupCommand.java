@@ -3,45 +3,53 @@ package org.example.command;
 import org.example.model.Item;
 import org.example.model.Player;
 
+/**
+ * Picks up item from current location and adds to backpack.
+ * Usage: vezmi [item] (e.g., vezmi mec)
+ * @author Text Game Team
+ */
 public class PickupCommand implements Command {
 
     private Player player;
     private String itemId;
 
+    /**
+     * Creates pickup command.
+     * @param player the player
+     * @param itemId item id to pick up
+     */
     public PickupCommand(Player player, String itemId) {
         this.player = player;
         this.itemId = itemId;
     }
 
+    /**
+     * Executes item pickup if valid and backpack has space.
+     */
     @Override
     public void execute() {
-        // check if itemId is provided
-        if (itemId == null || itemId.isEmpty()) {
+        if (itemId == null || itemId.trim().isEmpty()) {
             System.out.println("Co chceš sebrat? Použij: vezmi [předmět]");
             return;
         }
 
-        // find item in current location
-        Item item = player.getCurrentLocation().findItem(itemId);
+        Item item = player.getCurrentLocation().findItem(itemId.trim());
 
         if (item == null) {
             System.out.println("Předmět '" + itemId + "' se zde nenachází.");
             return;
         }
 
-        // check if item is portable
         if (!item.isPortable()) {
             System.out.println("Předmět '" + item.getName() + "' nelze sebrat.");
             return;
         }
 
-        // check if backpack is full
         if (player.getBackpack().isFull()) {
             System.out.println("Batoh je plný! Nejprve něco polož.");
             return;
         }
 
-        // add item to backpack and remove from location
         player.getBackpack().addItem(item);
         player.getCurrentLocation().removeItem(item);
 
