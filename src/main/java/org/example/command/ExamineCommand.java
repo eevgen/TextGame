@@ -9,7 +9,7 @@ import org.example.model.Player;
  * Examines location, item, or NPC. Shows full description and details.
  * Usage: prozkoumej [target] (e.g., prozkoumej mec, prozkoumej babicka)
  * If no target specified, shows current location.
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public class ExamineCommand implements Command {
 

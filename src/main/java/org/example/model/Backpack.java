@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Container for carrying items. Has limited capacity.
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public class Backpack {
 

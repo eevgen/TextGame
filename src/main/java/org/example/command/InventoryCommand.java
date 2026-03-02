@@ -6,7 +6,7 @@ import org.example.model.Player;
 /**
  * Displays all items in player backpack.
  * Usage: batoh
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public class InventoryCommand implements Command {
 

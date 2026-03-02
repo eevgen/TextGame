@@ -6,7 +6,7 @@ import lombok.Setter;
 
 /**
  * Game item - can be picked up, used, or examined.
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 @Getter
 @Setter

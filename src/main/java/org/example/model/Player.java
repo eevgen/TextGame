@@ -2,7 +2,7 @@ package org.example.model;
 
 /**
  * Game player - controlled by user, has health points.
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public class Player extends Character {
 

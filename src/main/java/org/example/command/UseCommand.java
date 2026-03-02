@@ -7,7 +7,7 @@ import org.example.model.Player;
 /**
  * Uses item from backpack. Each item has specific effect.
  * Usage: pouzij [item] (e.g., pouzij klic, pouzij mec)
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public class UseCommand implements Command {
 

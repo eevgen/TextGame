@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Factory for creating game commands from command names.
  * Maps command strings to Command objects using switch statement.
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 @Getter
 public class CommandFactory {

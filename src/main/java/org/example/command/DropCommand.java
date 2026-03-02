@@ -6,7 +6,7 @@ import org.example.model.Player;
 /**
  * Drops item from backpack to current location.
  * Usage: poloz [item] (e.g., poloz kniha, poloz mapa)
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public class DropCommand implements Command {
 

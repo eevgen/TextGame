@@ -7,7 +7,7 @@ import org.example.model.Player;
 /**
  * Talks to NPC and receives dialog. May receive reward item.
  * Usage: mluv [npc] (e.g., mluv babicka, mluv vila)
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public class TalkCommand implements Command {
 

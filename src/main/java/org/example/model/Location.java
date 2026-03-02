@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Game world location - contains items, NPCs, and connections to other locations.
  * Can be locked (requires key to pass).
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 @Getter
 @Setter

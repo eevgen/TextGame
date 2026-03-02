@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 /**
  * Main game controller - handles game loop, user input, and win condition.
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public class GameController {
 

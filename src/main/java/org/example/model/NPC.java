@@ -2,7 +2,7 @@ package org.example.model;
 
 /**
  * Non-player character - can be talked to and may give rewards.
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public class NPC extends Character {
 

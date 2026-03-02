@@ -6,7 +6,7 @@ import org.example.model.Player;
 /**
  * Picks up item from current location and adds to backpack.
  * Usage: vezmi [item] (e.g., vezmi mec)
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public class PickupCommand implements Command {
 

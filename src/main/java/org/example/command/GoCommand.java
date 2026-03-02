@@ -10,7 +10,7 @@ import org.example.model.Player;
 /**
  * Moves player in specified direction if exit exists and not locked.
  * Usage: jdi [direction] (e.g., jdi north, jdi sever)
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 @Getter
 @Setter

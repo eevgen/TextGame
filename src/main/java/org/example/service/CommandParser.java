@@ -10,7 +10,7 @@ import java.util.Arrays;
 /**
  * Parses user input and creates Command objects.
  * Splits input into command name and parameter.
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 @Getter
 public class CommandParser {

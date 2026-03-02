@@ -2,7 +2,7 @@ package org.example.model;
 
 /**
  * Base class for any character that can move and carry items.
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public abstract class Character {
 

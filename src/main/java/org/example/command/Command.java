@@ -3,7 +3,7 @@ package org.example.command;
 /**
  * Base command interface - all game commands implement this.
  * Uses Command design pattern for consistency.
- * @author Text Game Team
+ * @author Yevhen Kalenichenko
  */
 public interface Command {
 
